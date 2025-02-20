@@ -36,6 +36,9 @@ jobs:
       - name: ⚙️ Build
         run: pnpm build
 
+      - name: 🏗️ Migrate database
+        run: pnpm db:migrate
+
       - name: 🚗 Install browsers
         run: pnpm exec playwright install
 
