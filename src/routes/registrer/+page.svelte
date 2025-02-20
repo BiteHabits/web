@@ -20,5 +20,5 @@
 		<input type="password" name="password" class="rounded border p-1" />
 	</label>
 
-	<button class="rounded bg-blue-500 p-1">Logg inn</button>
+	<button class="rounded bg-blue-500 p-1">Registrer deg</button>
 </form>
