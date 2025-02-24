@@ -1,11 +1,12 @@
 # Running
 
-## Avhengigheter
+## System avhengigheter
 
 Denne appen krever at du har følgende lastet ned på datamaskinen din:
 
 - `git@2.x.x`
 - `pnpm@9.x.x`
+- `node@20.x.x`
 
 ## Hvordan kjøre
 
