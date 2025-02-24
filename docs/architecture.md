@@ -27,4 +27,5 @@ graph TD
     A -->|Requests endpoints| B
     B -->|SQL Queries| D
     D -->|Query Results| B
+    SvelteKit_App -->|Requested files| A
 ```
