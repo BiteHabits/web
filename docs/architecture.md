@@ -25,6 +25,6 @@ graph TD
 
     A -->|Loads static files| C
     A -->|Requests endpoints| B
-    D -->|SQL Queries| B
-    B -->|Query Results| D
+    B -->|SQL Queries| D
+    D -->|Query Results| B
 ```
