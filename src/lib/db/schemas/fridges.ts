@@ -10,7 +10,7 @@ export const fridges = sqliteTable(
     }
 )
 
-// export const fridgesRElations = relations(fridges, ({ many }) => ({
+// export const fridgesRelations = relations(fridges, ({ many }) => ({
 //     //will add relation to user-fridge
 //     //will add relation to products
 // }));
