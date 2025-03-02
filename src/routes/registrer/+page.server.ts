@@ -1,4 +1,4 @@
-import { hash } from '$lib/auth/hash.js';
+import { hash } from '$lib/auth/hash';
 import { AUTH_COOKIE_NAME } from '$lib/constants.js';
 import { db } from '$lib/db/drizzle.js';
 import { sessions } from '$lib/db/schemas';

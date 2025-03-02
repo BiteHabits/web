@@ -3,7 +3,6 @@ import { index, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import { passwords } from './passwords';
 import { sessions } from './sessions';
-import { userFridges } from './user_fridge';
 
 export const users = sqliteTable(
 	'user',
@@ -20,7 +19,6 @@ export const usersRelations = relations(users, ({ one, many }) => ({
 		fields: [users.id],
 		references: [passwords.userId]
 	}),
-    userFridges: many(userFridges),
 	sessions: many(sessions)
 }));
 
