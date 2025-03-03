@@ -6,21 +6,21 @@ import { fridges } from './fridges'
 export const fridgeUsers = sqliteTable(
     'fridge_user',
     {
-        userId: text().notNull().references(() => users.id, { onDelete: 'cascade' }),
-        fridgeId: text().notNull().references(() => fridges.id, { onDelete: 'cascade' }),
+        user_id: text().notNull().references(() => users.id, { onDelete: 'cascade' }),
+        fridge_id: text().notNull().references(() => fridges.fridge_id, { onDelete: 'cascade' }),
     },
     (t) => [
-        primaryKey({ columns: [t.userId, t.fridgeId]})
+        primaryKey({ columns: [t.user_id, t.fridge_id]})
     ]
 );
 
 export const fridgeUsersRelations = relations(fridgeUsers, ({ one }) => ({
     user: one(users, {
-        fields: [fridgeUsers.userId],
+        fields: [fridgeUsers.user_id],
         references: [users.id]
     }),
     fridge: one(fridges, {
-        fields: [fridgeUsers.fridgeId],
+        fields: [fridgeUsers.fridge_id],
         references: [fridges.fridge_id]
     })
 }));
