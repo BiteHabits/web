@@ -1,0 +1,7 @@
+.svekte-kit
+node_modules
+build
+test-results
+.env*
+.github
+.vscode
