@@ -1,10 +1,10 @@
 import { db } from "$lib/db/drizzle";
 import { eq } from "drizzle-orm";
-import type { Actions } from "@sveltejs/kit";
+import { fail, redirect, type Actions } from "@sveltejs/kit";
 import { fridges } from "$lib/db/schemas";
 import { AUTH_COOKIE_NAME } from "$lib/constants";
 
-export async function getUserFromCookies(cookies: Record<string, any>){
+async function getUserFromCookies(cookies: Record<string, any>){
     const sessionId = cookies.get(AUTH_COOKIE_NAME)
     if (!sessionId) return null;
     
@@ -21,28 +21,32 @@ export const actions: Actions = {
     default: async ({ request, cookies }) => {
         const userId = await getUserFromCookies(cookies);
         if (!userId){
-            return{
+            return fail(401,{
                 succses: false,
-                error: "You must be logged in to craete a fridge."
-            };
+                error: "You must be logged in to create a fridge."
+            });
         }
 
         const formData = await request.formData();
         const name = formData.get('name') as string;
 
         if (!name){
-            return{
+            return fail(400,{
                 success: false,
                 error: 'Name is required'
-            };
+            });
         }
 
-        await db.insert(fridges).values({
-            name: name
-        });
-
-        return{
-            success: true
-        };
+        try{
+            await db.insert(fridges).values({
+                name: name,
+                userId: userId
+            });
+        } catch (error){
+            console.error('Fridge creation error:', error);
+            return fail(500, {
+                error: 'Kunne ikkje opprette kjoleskap'
+            });
+        }
     }
 };
