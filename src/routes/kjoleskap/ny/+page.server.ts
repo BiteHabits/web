@@ -1,52 +1,56 @@
-import { db } from "$lib/db/drizzle";
-import { eq } from "drizzle-orm";
-import { fail, type Actions } from "@sveltejs/kit";
-import { fridges } from "$lib/db/schemas";
-import { AUTH_COOKIE_NAME } from "$lib/constants";
+import { db } from '$lib/db/drizzle';
+import { eq } from 'drizzle-orm';
+import { fail, type Actions } from '@sveltejs/kit';
+import { fridges } from '$lib/db/schemas';
+import { AUTH_COOKIE_NAME } from '$lib/constants';
 
-async function getUserFromCookies(cookies: Record<string, any>){
-    const sessionId = cookies.get(AUTH_COOKIE_NAME)
-    if (!sessionId) return null;
-    
-    const session = await db.query.sessions.findFirst({
-        where: (fields) => eq(fields.id, sessionId)
-    });
+interface Cookies {
+	get(name: string): string | undefined;
+}
 
-    if (!session || session.expiresAt < new Date()) return null;
+async function getUserFromCookies(cookies: Cookies): Promise<string | null> {
+	const sessionId = cookies.get(AUTH_COOKIE_NAME);
+	if (!sessionId) return null;
 
-    return session.userId;
+	const session = await db.query.sessions.findFirst({
+		where: (fields) => eq(fields.id, sessionId)
+	});
+
+	if (!session || session.expiresAt < new Date()) return null;
+
+	return session.userId;
 }
 
 export const actions: Actions = {
-    default: async ({ request, cookies }) => {
-        const userId = await getUserFromCookies(cookies);
-        if (!userId){
-            return fail(401,{
-                succses: false,
-                error: "You must be logged in to create a fridge."
-            });
-        }
+	default: async ({ request, cookies }) => {
+		const userId = await getUserFromCookies(cookies);
+		if (!userId) {
+			return fail(401, {
+				succses: false,
+				error: 'You must be logged in to create a fridge.'
+			});
+		}
 
-        const formData = await request.formData();
-        const name = formData.get('name') as string;
+		const formData = await request.formData();
+		const name = formData.get('name') as string;
 
-        if (!name){
-            return fail(400,{
-                success: false,
-                error: 'Name is required'
-            });
-        }
+		if (!name) {
+			return fail(400, {
+				success: false,
+				error: 'Name is required'
+			});
+		}
 
-        try{
-            await db.insert(fridges).values({
-                name: name,
-                userId: userId
-            });
-        } catch (error){
-            console.error('Fridge creation error:', error);
-            return fail(500, {
-                error: 'Kunne ikkje opprette kjoleskap'
-            });
-        }
-    }
+		try {
+			await db.insert(fridges).values({
+				name: name,
+				userId: userId
+			});
+		} catch (error) {
+			console.error('Fridge creation error:', error);
+			return fail(500, {
+				error: 'Kunne ikkje opprette kjoleskap'
+			});
+		}
+	}
 };
