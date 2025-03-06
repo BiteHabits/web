@@ -1,6 +1,6 @@
 import { db } from "$lib/db/drizzle";
 import { eq } from "drizzle-orm";
-import { fail, redirect, type Actions } from "@sveltejs/kit";
+import { fail, type Actions } from "@sveltejs/kit";
 import { fridges } from "$lib/db/schemas";
 import { AUTH_COOKIE_NAME } from "$lib/constants";
 

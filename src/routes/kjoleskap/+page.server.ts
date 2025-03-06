@@ -1,8 +1,9 @@
 import { db } from "$lib/db/drizzle";
 import { AUTH_COOKIE_NAME } from "$lib/constants";
-import type { PageServerLoad } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import { fridges } from "$lib/db/schemas/fridges";
 import { eq } from "drizzle-orm";
+import { fail } from "@sveltejs/kit";
 
 // Function to get user ID from cookies
 async function getUserFromCookies(cookies: Record<string, any>) {
