@@ -3,19 +3,18 @@ import { eq } from 'drizzle-orm';
 import type { Actions } from '@sveltejs/kit';
 import { products } from '$lib/db/schemas';
 import { AUTH_COOKIE_NAME } from '$lib/constants';
-import type { Cookies } from '@sveltejs/kit';
 
-export async function getUserFromCookies(cookies: Cookies) {
-    const sessionId = cookies.get(AUTH_COOKIE_NAME);
-    if (!sessionId) return null;
+async function getUserFromCookies(cookies: Record<string, any>) {
+	const sessionId = cookies.get(AUTH_COOKIE_NAME);
+	if (!sessionId) return null;
 
-    const session = await db.query.sessions.findFirst({
-        where: (fields) => eq(fields.id, sessionId)
-    });
+	const session = await db.query.sessions.findFirst({
+		where: (fields) => eq(fields.id, sessionId)
+	});
 
-    if (!session || session.expiresAt < new Date()) return null;
+	if (!session || session.expiresAt < new Date()) return null;
 
-    return session.userId;
+	return session.userId;
 }
 
 export const actions: Actions = {

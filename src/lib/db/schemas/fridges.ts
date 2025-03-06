@@ -3,7 +3,7 @@ import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 
 export const fridges = sqliteTable('fridge', {
-	fridge_id: text().primaryKey().$defaultFn(nanoid),
+	fridgeId: text().primaryKey().$defaultFn(nanoid),
 	name: text('name').notNull()
 });
 
