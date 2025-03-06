@@ -12,7 +12,7 @@
 
 	<label class="flex flex-col">
 		Expiry Date
-		<input type="date" name="expiryDate" class="rounded border p-1" required />
+		<input type="date" name="expiry_date" class="rounded border p-1" required />
 	</label>
 
 	<label class="flex flex-col">
@@ -22,7 +22,7 @@
 
 	<label class="flex flex-col">
 		Fridge ID
-		<input name="fridgeId" class="rounded border p-1" required />
+		<input name="fridge_id" class="rounded border p-1" required />
 	</label>
 
 	<button class="rounded bg-blue-500 p-1">Register Product</button>
