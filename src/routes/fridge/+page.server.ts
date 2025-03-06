@@ -1,26 +1,11 @@
 import { db } from '$lib/db/drizzle';
-import { eq } from 'drizzle-orm';
-import type { Actions, Cookies } from '@sveltejs/kit';
+import type { Actions } from '@sveltejs/kit';
 import { products } from '$lib/db/schemas';
-import { AUTH_COOKIE_NAME } from '$lib/constants';
-
-async function getUserFromCookies(cookies: Cookies) {
-	const sessionId = cookies.get(AUTH_COOKIE_NAME);
-	if (!sessionId) return null;
-
-	const session = await db.query.sessions.findFirst({
-		where: (fields) => eq(fields.id, sessionId)
-	});
-
-	if (!session || session.expiresAt < new Date()) return null;
-
-	return session.userId;
-}
 
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
-		const userId = await getUserFromCookies(cookies);
-		if (!userId) {
+	default: async ({ request, locals }) => {
+		const user = locals.auth?.user;
+		if (!user) {
 			return {
 				success: false,
 				error: 'You must be logged in to add a product.'
