@@ -1,30 +1,11 @@
 import { db } from '$lib/db/drizzle';
-import { eq } from 'drizzle-orm';
 import { fail, type Actions } from '@sveltejs/kit';
 import { fridges } from '$lib/db/schemas';
-import { AUTH_COOKIE_NAME } from '$lib/constants';
-
-interface Cookies {
-	get(name: string): string | undefined;
-}
-
-async function getUserFromCookies(cookies: Cookies): Promise<string | null> {
-	const sessionId = cookies.get(AUTH_COOKIE_NAME);
-	if (!sessionId) return null;
-
-	const session = await db.query.sessions.findFirst({
-		where: (fields) => eq(fields.id, sessionId)
-	});
-
-	if (!session || session.expiresAt < new Date()) return null;
-
-	return session.userId;
-}
 
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
-		const userId = await getUserFromCookies(cookies);
-		if (!userId) {
+	default: async ({ request, locals }) => {
+		const userId = locals.auth?.user.id;
+		if (userId === undefined || userId === null) {
 			return fail(401, {
 				succses: false,
 				error: 'You must be logged in to create a fridge.'

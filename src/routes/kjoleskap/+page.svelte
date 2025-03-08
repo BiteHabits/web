@@ -1,7 +1,6 @@
 <script lang="ts">
-	export let data;
-	console.log(data);
-	$: fridges = data.fridges;
+	let { data } = $props();
+	let fridges = $derived(data.fridges);
 </script>
 
 <div class="container">

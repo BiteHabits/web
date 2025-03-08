@@ -6,7 +6,7 @@ import { users } from './users';
 export const fridges = sqliteTable(
 	'fridge',
 	{
-		fridge_id: text().primaryKey().$defaultFn(nanoid),
+		id: text().primaryKey().$defaultFn(nanoid),
 		name: text('name').notNull(),
 		userId: text('user_id')
 			.notNull()

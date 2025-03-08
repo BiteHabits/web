@@ -2,8 +2,8 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 
-	let fridgeName = '';
-	let error = '';
+	let fridgeName = $state('');
+	let error = $state('');
 
 	function handleSubmit() {
 		if (fridgeName.length < 2) {
@@ -26,7 +26,7 @@
 				}
 			};
 		}}
-		on:submit|preventDefault={handleSubmit}
+		onsubmit={handleSubmit}
 	>
 		<div class="form-group">
 			<label for="name">Navn på kjøleskap</label>
