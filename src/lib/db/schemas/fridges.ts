@@ -26,8 +26,7 @@ export const fridgesRelations = relations(fridges, ({ one }) => ({
 	user: one(users, {
 		fields: [fridges.userId],
 		references: [users.id]
-	}),
-    
+	})
 }));
 
 export type Fridge = InferSelectModel<typeof fridges>;
