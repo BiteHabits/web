@@ -14,11 +14,11 @@ export const actions: Actions = {
 
 		const formData = await request.formData();
 		const name = formData.get('name') as string | null;
-		const expiry_date = formData.get('expiry_date') as string | null;
+		const expiryDate = formData.get('expiry_date') as string | null;
 		const quantity = formData.get('quantity') as string | null;
-		const fridge_id = formData.get('fridge_id') as string | null;
+		const fridgeId = formData.get('fridge_id') as string | null;
 
-		if (!name || !expiry_date || !quantity || !fridge_id) {
+		if (!name || !expiryDate || !quantity || !fridgeId) {
 			return {
 				success: false,
 				error: 'Invalid input'
@@ -35,9 +35,9 @@ export const actions: Actions = {
 
 		await db.insert(products).values({
 			name,
-			expiresAt: expiry_date,
+			expiresAt: expiryDate,
 			quantity: quantityNumber,
-			fridgeId: fridge_id
+			fridgeId: fridgeId
 		});
 
 		return {
