@@ -9,7 +9,6 @@ export const load: PageServerLoad = async ({ params }) => {
 		where: (fields) => eq(fields.fridgeId, fridgeId)
 	});
 
-
 	return {
 		fridgeId,
 		products
