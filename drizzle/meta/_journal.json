@@ -32,16 +32,9 @@
     },
     {
       "idx": 4,
-      "version": "7",
-      "when": 1739964124929,
-      "tag": "0004_fridges",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1739964124930,
-      "tag": "0005_products",
+      "version": "6",
+      "when": 1741693666278,
+      "tag": "0004_plain_magdalene",
       "breakpoints": true
     }
   ]
