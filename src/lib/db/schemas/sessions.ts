@@ -1,4 +1,4 @@
-import { relations, type InferSelectModel } from 'drizzle-orm';
+import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import { users } from './users';
@@ -20,3 +20,4 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 }));
 
 export type Session = InferSelectModel<typeof sessions>;
+export type SessionInsert = InferInsertModel<typeof sessions>;
