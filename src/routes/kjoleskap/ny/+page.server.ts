@@ -1,11 +1,11 @@
 import { db } from '$lib/db/drizzle';
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { fridges } from '$lib/db/schemas';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
 		const userId = locals.auth?.user.id;
-		if (userId === undefined || userId === null) {
+		if (!userId) {
 			return fail(401, {
 				succses: false,
 				error: 'You must be logged in to create a fridge.'
@@ -21,17 +21,17 @@ export const actions: Actions = {
 				error: 'Name is required'
 			});
 		}
+        try {
+            await db.insert(fridges).values({
+                name,
+                userId
+            });
+        } catch (error) {
+            return fail(500, {
+                error: 'Kunne ikkje opprette kjøleskap'
+            });
+        }
 
-		try {
-			await db.insert(fridges).values({
-				name: name,
-				userId: userId
-			});
-		} catch (error) {
-			console.error('Fridge creation error:', error);
-			return fail(500, {
-				error: 'Kunne ikkje opprette kjoleskap'
-			});
-		}
-	}
+        throw redirect(303, `/kjoleskap`);
+    }
 };

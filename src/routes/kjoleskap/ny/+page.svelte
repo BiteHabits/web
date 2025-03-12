@@ -1,34 +1,19 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
 
 	let fridgeName = $state('');
-	let error = $state('');
-
-	function handleSubmit() {
-		if (fridgeName.length < 2) {
-			error = 'Kjøleskap må være minst 2 tegn langt';
-			return;
-		}
-	}
+	let error = $derived(
+            	fridgeName.length < 2 ? 'Kjøleskap må være minst 2 tegn langt' : null
+        );
 </script>
 
 <div class="container">
 	<h1>Oprett nytt kjøleskap</h1>
 	<form
 		method="POST"
-		use:enhance={() => {
-			return async ({ result, update }) => {
-				if (result.type === 'success') {
-					await goto('/kjoleskap');
-				} else {
-					await update();
-				}
-			};
-		}}
-		onsubmit={handleSubmit}
-	>
-		<div class="form-group">
+		use:enhance		
+        >
+        <div class="form-group">
 			<label for="name">Navn på kjøleskap</label>
 			<input
 				type="text"
