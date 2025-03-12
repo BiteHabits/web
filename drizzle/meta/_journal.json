@@ -36,6 +36,13 @@
       "when": 1741187736094,
       "tag": "0004_bent_tusk",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1741782738760,
+      "tag": "0005_spicy_tarot",
+      "breakpoints": true
     }
   ]
 }
