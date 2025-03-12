@@ -27,4 +27,4 @@ export const fridgeUsersRelations = relations(fridgeUsers, ({ one }) => ({
 	})
 }));
 
-export type fridgeUsers = InferSelectModel<typeof fridgeUsers>;
+export type FridgeUser = InferSelectModel<typeof fridgeUsers>;
