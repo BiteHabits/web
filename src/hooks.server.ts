@@ -1,31 +1,17 @@
 import { AUTH_COOKIE_NAME } from '$lib/constants';
-import { db } from '$lib/db/drizzle';
 import type { Handle } from '@sveltejs/kit';
-import { isPast } from 'date-fns';
+import { SessionService } from '$lib/services';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get(AUTH_COOKIE_NAME);
 
 	if (sessionId) {
-		const session = await db.query.sessions.findFirst({
-			where: (row, { eq }) => eq(row.id, sessionId)
-		});
+		const authSession = await SessionService.getValidSessionAndUser(sessionId);
 
-		if (!session || isPast(session.expiresAt)) {
-			event.locals.auth = null;
+		if (authSession) {
+			event.locals.auth = authSession;
 		} else {
-			const user = await db.query.users.findFirst({
-				where: (row, { eq }) => eq(row.id, session.userId)
-			});
-
-			if (user) {
-				event.locals.auth = {
-					user,
-					session
-				};
-			} else {
-				event.locals.auth = null;
-			}
+			event.locals.auth = null;
 		}
 	} else {
 		event.locals.auth = null;
