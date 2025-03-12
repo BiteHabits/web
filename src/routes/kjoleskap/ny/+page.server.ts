@@ -26,7 +26,7 @@ export const actions: Actions = {
 				name,
 				userId
 			});
-		} catch (error) {
+		} catch {
 			return fail(500, {
 				error: 'Kunne ikkje opprette kjøleskap'
 			});
