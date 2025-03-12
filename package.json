@@ -19,7 +19,8 @@
 		"db:push": "drizzle-kit push",
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
-		"db:dbml": "tsx ./scripts/dbml.ts"
+		"db:dbml": "tsx ./scripts/dbml.ts",
+		"db:reset": "node -r dotenv/config ./reset-db.js"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
@@ -32,6 +33,7 @@
 		"@types/node": "^20.14.8",
 		"autoprefixer": "^10.4.20",
 		"drizzle-dbml-generator": "^0.10.0",
+		"dotenv": "^16.4.7",
 		"drizzle-kit": "^0.30.4",
 		"drizzle-seed": "^0.3.1",
 		"eslint": "^9.7.0",
