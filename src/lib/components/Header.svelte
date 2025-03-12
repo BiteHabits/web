@@ -19,6 +19,10 @@
 
 		{#if !!$user}
 			<li>
+				<a class="text-gray-700 hover:text-gray-900" href="/kjoleskap">Kjøleskap</a>
+			</li>
+
+			<li>
 				<button class="text-gray-700 hover:text-gray-900">Logg ut</button>
 			</li>
 		{/if}
