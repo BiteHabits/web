@@ -18,7 +18,8 @@
 		"db:generate": "drizzle-kit generate",
 		"db:push": "drizzle-kit push",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
+		"db:studio": "drizzle-kit studio",
+		"db:dbml": "tsx ./scripts/dbml.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
@@ -29,6 +30,7 @@
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/node": "^20.14.8",
 		"autoprefixer": "^10.4.20",
+		"drizzle-dbml-generator": "^0.10.0",
 		"drizzle-kit": "^0.30.4",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
