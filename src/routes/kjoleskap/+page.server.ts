@@ -7,7 +7,7 @@ import { redirect } from '@sveltejs/kit';
 export const load: PageServerLoad = async ({ locals }) => {
 	const userId = locals.auth?.user.id;
 	if (!userId) {
-        throw redirect(308,"/");
+		throw redirect(308, '/');
 	}
 
 	const val = await db.select().from(fridges).where(eq(fridges.userId, userId));

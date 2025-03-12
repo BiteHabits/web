@@ -2,18 +2,13 @@
 	import { enhance } from '$app/forms';
 
 	let fridgeName = $state('');
-	let error = $derived(
-            	fridgeName.length < 2 ? 'Kjøleskap må være minst 2 tegn langt' : null
-        );
+	let error = $derived(fridgeName.length < 2 ? 'Kjøleskap må være minst 2 tegn langt' : null);
 </script>
 
 <div class="container">
 	<h1>Oprett nytt kjøleskap</h1>
-	<form
-		method="POST"
-		use:enhance		
-        >
-        <div class="form-group">
+	<form method="POST" use:enhance>
+		<div class="form-group">
 			<label for="name">Navn på kjøleskap</label>
 			<input
 				type="text"

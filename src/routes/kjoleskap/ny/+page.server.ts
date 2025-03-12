@@ -21,17 +21,17 @@ export const actions: Actions = {
 				error: 'Name is required'
 			});
 		}
-        try {
-            await db.insert(fridges).values({
-                name,
-                userId
-            });
-        } catch (error) {
-            return fail(500, {
-                error: 'Kunne ikkje opprette kjøleskap'
-            });
-        }
+		try {
+			await db.insert(fridges).values({
+				name,
+				userId
+			});
+		} catch (error) {
+			return fail(500, {
+				error: 'Kunne ikkje opprette kjøleskap'
+			});
+		}
 
-        throw redirect(303, `/kjoleskap`);
-    }
+		throw redirect(303, `/kjoleskap`);
+	}
 };
