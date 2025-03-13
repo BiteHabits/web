@@ -3,8 +3,6 @@
 	import { getUser } from '$lib/context/user-context';
 
 	let user = getUser();
-
-	$inspect($user);
 </script>
 
 <header class="flex items-center justify-between p-4">

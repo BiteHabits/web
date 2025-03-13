@@ -1,7 +1,5 @@
 import { db } from '$lib/db/drizzle';
 import type { PageServerLoad } from './$types';
-import { fridges } from '$lib/db/schemas/fridges';
-import { eq } from 'drizzle-orm';
 import { redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -10,9 +8,11 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw redirect(308, '/');
 	}
 
-	const val = await db.select().from(fridges).where(eq(fridges.userId, userId));
+	const fridges = await db.query.fridges.findMany({
+		where: (row, { eq }) => eq(row.userId, userId)
+	});
 
 	return {
-		fridges: val
+		fridges
 	};
 };
