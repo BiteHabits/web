@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw redirect(308, '/');
 	}
 
-    const fridges = await db.query.fridges.findMany({
+	const fridges = await db.query.fridges.findMany({
 		where: (row, { eq }) => eq(row.userId, userId)
 	});
 

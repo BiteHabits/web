@@ -1,7 +1,34 @@
+table fridge_user {
+  user_id text [not null]
+  fridge_id text [not null]
+
+  indexes {
+    (user_id, fridge_id) [pk]
+  }
+}
+
+table fridge {
+  id text [pk, not null]
+  name text [not null]
+  userId text [not null]
+
+  indexes {
+    (userId, name) [name: 'unique_user_fridge_name', unique]
+  }
+}
+
 table password {
   id text [pk, not null]
   userId text [not null]
   hash text [not null]
+}
+
+table product {
+  id text [pk, not null]
+  name text [not null]
+  expiry_date text [not null]
+  quantity integer [not null]
+  fridge_id text [not null]
 }
 
 table session {
@@ -20,6 +47,12 @@ table user {
     email [name: 'email_idx']
   }
 }
+
+ref: fridge_user.user_id - user.id
+
+ref: fridge_user.fridge_id - fridge.id
+
+ref: fridge.userId - user.id
 
 ref: user.id - password.userId
 
