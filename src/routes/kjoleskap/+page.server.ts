@@ -1,8 +1,8 @@
 import { db } from '$lib/db/drizzle';
 import type { PageServerLoad } from './$types';
 import { fail, type Actions } from '@sveltejs/kit';
-import { fridges, fridgeUsers } from '$lib/db/schemas';
-import { eq, and, ne } from 'drizzle-orm';
+import { fridgeUsers } from '$lib/db/schemas';
+import { eq } from 'drizzle-orm';
 import { redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -11,15 +11,18 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw redirect(308, '/');
 	}
 
-	const ownedFridges = await db.select().from(fridges).where(eq(fridges.userId, userId));
+    const fridges = await db.query.fridges.findMany({
+		where: (row, { eq }) => eq(row.userId, userId)
+	});
 
-	const sharedFridges = await db
-		.select()
-		.from(fridges)
-		.innerJoin(fridgeUsers, eq(fridges.id, fridgeUsers.fridge_id))
-		.where(and(eq(fridgeUsers.user_id, userId), ne(fridges.userId, userId)));
+	const sharedFridges = await db.query.fridgeUsers.findMany({
+		where: (row, { eq }) => eq(row.user_id, userId),
+		with: {
+		  fridge: true
+		}
+	}).then(result => result.filter(item => item.fridge && item.fridge.userId !== userId));
 
-	const allFridges = [...ownedFridges, ...sharedFridges.map((item) => item.fridge)];
+	const allFridges = [...fridges, ...sharedFridges.map((item) => item.fridge)];
 
 	return {
 		fridges: allFridges
