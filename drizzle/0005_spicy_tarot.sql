@@ -4,5 +4,5 @@ CREATE TABLE `product` (
 	`expiry_date` text NOT NULL,
 	`quantity` integer NOT NULL,
 	`fridge_id` text NOT NULL,
-	FOREIGN KEY (`fridge_id`) REFERENCES `fridge`(`fridge_id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`fridge_id`) REFERENCES `fridge`(`id`) ON UPDATE no action ON DELETE no action
 );
