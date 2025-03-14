@@ -15,12 +15,14 @@ export const load: PageServerLoad = async ({ locals }) => {
 		where: (row, { eq }) => eq(row.userId, userId)
 	});
 
-	const sharedFridges = await db.query.fridgeUsers.findMany({
-		where: (row, { eq }) => eq(row.user_id, userId),
-		with: {
-		  fridge: true
-		}
-	}).then(result => result.filter(item => item.fridge && item.fridge.userId !== userId));
+	const sharedFridges = await db.query.fridgeUsers
+		.findMany({
+			where: (row, { eq }) => eq(row.user_id, userId),
+			with: {
+				fridge: true
+			}
+		})
+		.then((result) => result.filter((item) => item.fridge && item.fridge.userId !== userId));
 
 	const allFridges = [...fridges, ...sharedFridges.map((item) => item.fridge)];
 
