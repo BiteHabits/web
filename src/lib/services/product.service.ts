@@ -2,9 +2,12 @@ import { db } from '$lib/db/drizzle';
 import { isPast } from 'date-fns';
 import { eq } from 'drizzle-orm';
 
-export const getProducts = async (productId: string) => {
+export const getProduct = async (productId: string) => {
 	const product = await db.query.product.findFirst({
-		where: (row, { eq }) => eq(row.id, productId)
+		where: (row, { eq }) => eq(row.id, productId),
+		with: {
+			fridgeId: true
+		}
 	});
 
 	if (!product) {
@@ -20,5 +23,10 @@ export const getProducts = async (productId: string) => {
 		return null;
 	}
 
-	return product;
+	const { fridgeId, ...productWithoutFridgeId } = product;
+
+	return {
+		fridgeId,
+		product: productWithoutFridgeId
+	};
 };
