@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	export let fridge_id: string;
+	type Props = {
+		fridgeId: string
+	}
+	
+	let { fridgeId }: Props = $props();
 </script>
 
 <div class="share-fridge-form">
