@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	type Props = {
-		fridgeId: string
-	}
-	
+		fridgeId: string;
+	};
+
 	let { fridgeId }: Props = $props();
 </script>
 
 <div class="share-fridge-form">
 	<form method="POST" action="?/shareFridge" use:enhance>
-		<input type="hidden" name="fridge_id" value={fridge_id} />
+		<input type="hidden" name="fridge_id" value={fridgeId} />
 		<div>
 			<label for="email">User Email</label>
 			<input type="email" id="email" name="email" placeholder="Enter email address" required />
