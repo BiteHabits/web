@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { givenProduct } from './fixtures/product';
-import { givenUser } from './fixtures/users';
+
 import {
 	createProduct,
 	deleteProduct,
