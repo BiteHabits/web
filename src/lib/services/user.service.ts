@@ -1,6 +1,13 @@
 import { db } from '$lib/db/drizzle';
+import { users, type UserInsert } from '$lib/db/schemas';
+import { eq } from 'drizzle-orm';
+import { nanoid } from 'nanoid';
 
-export const getUserNameAndEmail = async (userId: string) => {
+export const getUserById = async (userId: string | undefined) => {
+	if (!userId) {
+		return null;
+	}
+
 	const user = await db.query.users.findFirst({
 		where: (row, { eq }) => eq(row.id, userId)
 	});
@@ -9,41 +16,44 @@ export const getUserNameAndEmail = async (userId: string) => {
 		return null;
 	}
 
-	return {
-		name: user.name,
-		email: user.email
-	};
+	return user;
 };
 
-export const findUserByEmail = async (email: string) => {
-	const user = await db.query.users.findFirst({
-		where: (row, { eq }) => eq(row.email, email)
-	});
+export const deleteUser = async (userId: string) => {
+	const deletedUser = await db.delete(users).where(eq(users.id, userId));
+	return deletedUser;
+};
 
+export const updateUser = async (userId: string, user: UserInsert) => {
 	if (!user) {
 		return null;
 	}
 
-	return {
-		user
-	};
+	const updatedUser = await db
+		.update(users)
+		.set({
+			name: user.name,
+			email: user.email
+		})
+		.where(eq(users.id, userId))
+		.returning();
+
+	return updatedUser;
 };
 
-export const getUserAndFridges = async (userId: string) => {
-	const user = await db.query.users.findFirst({
-		where: (row, { eq }) => eq(row.id, userId)
-	});
-
-	const fridges = await db.query.fridges.findMany({
-		where: (row, { eq }) => eq(row.userId, userId)
-	});
-
-	if (!user || !fridges) {
+export const createUser = async (user: UserInsert) => {
+	if (!user) {
 		return null;
 	}
 
-	return {
-		user,
-		fridges
-	};
+	const newUser = await db
+		.insert(users)
+		.values({
+			id: user.id ?? nanoid(),
+			name: user.name,
+			email: user.email
+		})
+		.returning();
+
+	return newUser[0];
 };
