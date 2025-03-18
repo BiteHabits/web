@@ -40,18 +40,28 @@ export const createFridge = async(name: string, CreatorUserId: string) => {
     try{
         let fridgeId = nanoid();
 
-        await db.transaction(async (tx) => {
-            await tx.insert(fridges).values({
+        // await db.transaction(async (tx) => {
+        //     await tx.insert(fridges).values({
+        //         id: fridgeId,
+        //         name: name,
+        //         userId: CreatorUserId
+        //     });
+        //
+        //     await tx.insert(fridgeUsers).values({
+        //         user_id: CreatorUserId,
+        //         fridge_id: fridgeId
+        //     });
+        // });
+        await db.insert(fridges).values({
                 id: fridgeId,
                 name: name,
                 userId: CreatorUserId
-            });
+        })
 
-            await tx.insert(fridgeUsers).values({
-                user_id: CreatorUserId,
-                fridge_id: fridgeId
-            });
-        });
+        await db.insert(fridgeUsers).values({
+            user_id: CreatorUserId,
+            fridge_id: fridgeId
+        })
 
         return db.query.fridges.findFirst({
             where: (row, { eq }) => eq(row.id, fridgeId)
@@ -86,8 +96,7 @@ export const getFridgeById = async(fridgeId: string, userId: string) =>{
     return {
         id: fridge.id,
         name: fridge.name,
-        creator: fridge.user,
-        members: fridge.fridgeUsers.map(fu => fu.user)
+        creator: fridge.userId,
     };
 };
 
@@ -97,12 +106,16 @@ export const getFridgeById = async(fridgeId: string, userId: string) =>{
 export const updateFridge = async(fridgeId: string, name: string, userId: string) =>{
     await authAdmin(fridgeId, userId);
 
-    return db.transaction(async (tx) => {
-        const result = await tx.update(fridges)
+    // return db.transaction(async (tx) => {
+    //     const result = await tx.update(fridges)
+    //     .set({ name })
+    //     .where(eq(fridges.id, fridgeId))
+    //     return result;
+    // })
+    
+    return db.update(fridges)
         .set({ name })
         .where(eq(fridges.id, fridgeId))
-        return result;
-    })
 }
 
 //Delete
@@ -111,11 +124,19 @@ export const updateFridge = async(fridgeId: string, name: string, userId: string
 export const deleteFridge = async(fridgeId: string, userId: string) =>{
     await authAdmin(fridgeId, userId);
 
-    return db.transaction(async (tx) => {
-        await tx.delete(fridgeUsers)
-        .where(eq(fridgeUsers.fridge_id, fridgeId));
+    // return db.transaction(async (tx) => {
+    //     await tx.delete(fridgeUsers)
+    //     .where(eq(fridgeUsers.fridge_id, fridgeId));
+    //
+    //     return tx.delete(fridges)
+    //     .where(eq(fridges.id,fridgeId))
+    // })
+    
+    let result = await db.delete(fridges)
+     .where(eq(fridges.id,fridgeId))
+     
+     await db.delete(fridgeUsers)
+     .where(eq(fridgeUsers.fridge_id, fridgeId));
 
-        return tx.delete(fridges)
-        .where(eq(fridges.id,fridgeId))
-    })
+     return result;
 }

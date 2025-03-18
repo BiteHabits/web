@@ -12,5 +12,7 @@ export const givenUser = async (user?: Partial<UserInsert>) => {
 
 	await db.insert(users).values(userInsert);
 
+    console.log(userInsert)
+
 	return userInsert;
 };

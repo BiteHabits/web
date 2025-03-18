@@ -9,12 +9,10 @@ export const givenFridge = async(user?: Partial<UserInsert>, fridge?: Partial<Fr
         userId: fridge?.userId ?? user?.id ?? "Non saved user"
     }
 
-    await db.transaction(async (tx) => {
-        await tx.insert(fridges).values(fridgeInsert);
-        await tx.insert(fridgeUsers).values({
-            fridge_id: fridgeInsert.id,
-            user_id: fridgeInsert.userId
-        });
+    await db.insert(fridges).values(fridgeInsert);
+    await db.insert(fridgeUsers).values({
+        fridge_id: fridgeInsert.id,
+        user_id: user?.id ?? "Test-id"
     });
 
     return fridgeInsert;
