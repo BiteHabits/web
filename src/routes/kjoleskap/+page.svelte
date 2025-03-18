@@ -38,7 +38,7 @@
 
 							{#if activeSharingFridgeId === fridge.id}
 								<div class="share-form-container">
-									<ShareFridgeForm fridge_id={fridge.id} />
+									<ShareFridgeForm fridgeId={fridge.id} />
 								</div>
 							{/if}
 						</div>
