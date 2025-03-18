@@ -2,6 +2,9 @@ import { db } from '$lib/db/drizzle';
 import { isPast } from 'date-fns';
 import { eq } from 'drizzle-orm';
 import { products } from '$lib/db/schemas';
+import { nanoid } from 'nanoid';
+import { type ProductInsert } from '$lib/db/schemas/products';
+
 
 export const getProduct = async (productId: string) => {
 	const product = await db.query.products.findFirst({
@@ -59,4 +62,43 @@ export const getProductsFromFridge = async (fridgeId: string) => {
 		}));
 
 	return filteredProducts;
+};
+
+export const deleteProduct = async (productId: string) => {
+	const deletedProduct = await db.delete(products).where(eq(products.id, productId));
+	return deletedProduct;
+};
+
+export const updateProduct = async (productId: string, product: ProductInsert) => {
+	if (!product) {
+		return null
+	}
+
+	const updatedProduct = await db.update(products).set({
+		name: product.name,
+		expiresAt: product.expiresAt,
+		quantity: product.quantity,
+		fridgeId: product.fridgeId,
+	})
+	.where(eq(products.id, productId))
+	.returning();
+
+	return updatedProduct;
+};
+
+export const createProduct = async (fridgeId: string, product: ProductInsert) => {
+
+	if (!product) {
+		return null
+	}
+
+	const new_Product = await db.insert(products).values({
+		id: product.id ?? nanoid(),
+        name: product.name,
+		expiresAt: product.expiresAt,
+		quantity: product.quantity,
+        fridgeId: fridgeId,
+    });
+
+	return new_Product;
 };
