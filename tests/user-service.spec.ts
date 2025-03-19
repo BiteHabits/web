@@ -15,7 +15,7 @@ describe('UserService', () => {
 	});
 
 	it('should create a user', async () => {
-		const createdUser = await createUser({
+		const createdUser = await UserService.create({
 			id: '0',
 			name: 'user1',
 			email: 'user1@email.com'
@@ -25,7 +25,7 @@ describe('UserService', () => {
 		expect(createdUser?.name).toBe('user1');
 		expect(createdUser?.email).toBe('user1@email.com');
 
-		const foundUser = await getUserById(createdUser?.id);
+		const foundUser = await UserService.byId(createdUser?.id);
 
 		expect(foundUser).not.toBeNull();
 		expect(foundUser?.name).toBe('user1');
@@ -35,14 +35,14 @@ describe('UserService', () => {
 	it('should update a user', async () => {
 		await givenUser({ id: 'user-1', name: 'user1', email: 'user1@email.com' });
 
-		const updatedUser = await updateUser('user-1', {
+		const updatedUser = await UserService.update('user-1', {
 			name: 'newuser1',
 			email: 'newuser1@email.com'
 		});
 
 		expect(updatedUser).not.toBeNull();
 
-		const foundUser = await getUserById('user-1');
+		const foundUser = await UserService.byId('user-1');
 
 		expect(foundUser).not.toBeNull();
 		expect(foundUser?.name).toBe('newuser1');
@@ -52,11 +52,11 @@ describe('UserService', () => {
 	it('should delete a user', async () => {
 		await givenUser({ id: 'user-1', name: 'user1', email: 'user1@email.com' });
 
-		const deletedUser = await deleteUser('user-1');
+		const deletedUser = await UserService.remove('user-1');
 
 		expect(deletedUser).not.toBeNull();
 
-		const userAfterDeletion = await getUserById('user-1');
+		const userAfterDeletion = await UserService.byId('user-1');
 
 		expect(userAfterDeletion).toBeNull();
 	});

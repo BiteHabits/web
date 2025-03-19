@@ -3,7 +3,7 @@ import { users, type UserInsert } from '$lib/db/schemas';
 import { eq } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 
-export const getUserById = async (userId: string | undefined) => {
+export const byId = async (userId: string | undefined) => {
 	if (!userId) {
 		return null;
 	}
@@ -19,12 +19,12 @@ export const getUserById = async (userId: string | undefined) => {
 	return user;
 };
 
-export const deleteUser = async (userId: string) => {
+export const remove = async (userId: string) => {
 	const deletedUser = await db.delete(users).where(eq(users.id, userId));
 	return deletedUser;
 };
 
-export const updateUser = async (userId: string, user: UserInsert) => {
+export const update = async (userId: string, user: UserInsert) => {
 	if (!user) {
 		return null;
 	}
@@ -41,7 +41,7 @@ export const updateUser = async (userId: string, user: UserInsert) => {
 	return updatedUser;
 };
 
-export const createUser = async (user: UserInsert) => {
+export const create = async (user: UserInsert) => {
 	if (!user) {
 		return null;
 	}
