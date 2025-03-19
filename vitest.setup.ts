@@ -7,7 +7,6 @@ vi.mock('./src/lib/db/drizzle', async () => {
 	const { createClient } = await import('@libsql/client');
 	const { drizzle } = await import('drizzle-orm/libsql');
 	const schema = await import('./src/lib/db/schemas');
-	console.log('Loaded schema: ', schema);
 
 	const client = createClient({ url: 'file::memory:?cache=shared' });
 	const db = drizzle(client, { schema, casing: 'snake_case' });

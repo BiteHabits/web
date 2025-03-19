@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { givenFridge } from "./fixtures/fridges";
 import { givenUser } from "./fixtures/users";
-import { createFridge, deleteFridge, getFridgeById, updateFridge } from "$lib/services/fridge.service"
+import { addMemberToFridge, createFridge, deleteFridge, getFridgeById, updateFridge } from "$lib/services/fridge.service"
 
 describe('FridgeService',() => {
     it('should return a fridge', async() => {
@@ -15,6 +15,19 @@ describe('FridgeService',() => {
         expect(fridge?.name).toBe('TestFridge')
         expect(fridge?.creator).toBe(user.id);
     });
+    
+    it('should return a fridge when a member retrieves it', async() =>{
+		let user = await givenUser({ id: 'user-1' });
+		let user2 = await givenUser({ id: 'user-2' });
+        await givenFridge(user,{id: 'Fridge-1',name: 'TestFridge'})
+        await(addMemberToFridge('Fridge-1', user.id, [user2.id]))
+
+        let fridge = await getFridgeById('Fridge-1', user2.id);
+        expect(fridge).not.toBe(null);
+        expect(fridge?.id).toBe('Fridge-1')
+        expect(fridge?.name).toBe('TestFridge')
+        expect(fridge?.creator).toBe(user.id);
+    })
 
     it('should throw an error when a non member tries to retrieve a fridge', async() => {
         let createdUser = await givenUser({id: 'user-1'});
@@ -60,11 +73,12 @@ describe('FridgeService',() => {
         let createdUser2 = await givenUser({ id: 'user-2' });
     
         await givenFridge(createdUser, {id: 'Fridge-1'});
+        await addMemberToFridge('Fridge-1', createdUser.id, [createdUser2.id])
     
         await expect(updateFridge('Fridge-1', 'new-name', createdUser2.id)).rejects.toThrow();
     })
     
-    it('should delete a fridge', async() => {
+    it('should delete a fridge when given id and correct creator id', async() => {
         let createdUser = await givenUser({ id: 'user-1' });
     
         let fridge = await givenFridge(createdUser, {id: 'Fridge-1'});
