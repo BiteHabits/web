@@ -28,7 +28,9 @@
 					<li>
 						<div class="fridge-item">
 							<div class="fridge-header">
-								<span class="fridge-name">{fridge.name}</span>
+								<a class="hover:undelrine" href="/kjoleskap/{fridge.id}">
+									<span class="fridge-name">{fridge.name}</span>
+								</a>
 								<div class="fridge-actions">
 									<button class="share-button" onclick={() => toggleShareForm(fridge.id)}>
 										{activeSharingFridgeId === fridge.id ? 'Skjul deling' : 'Del'}

@@ -1,9 +1,9 @@
 <script lang="ts">
 	let { data } = $props();
-	let { fridgeId, products } = $derived(data);
+	let { fridge, products } = $derived(data);
 </script>
 
-<h1>Products in Fridge {fridgeId}</h1>
+<h1>Products in {fridge.name}</h1>
 
 <ul>
 	{#each products as product}
