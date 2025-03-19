@@ -15,7 +15,7 @@
 
 <div class="container">
 	<!-- Navigation to Create Fridge -->
-	<a href="/kjoleskap/ny" class="create-fridge-button"> Opprett nytt kjøleskap </a>
+	<a href="/fridges/new" class="create-fridge-button"> Opprett nytt kjøleskap </a>
 
 	<!-- Fridges List -->
 	<div class="fridges-list">
@@ -28,7 +28,7 @@
 					<li>
 						<div class="fridge-item">
 							<div class="fridge-header">
-								<a class="hover:undelrine" href="/kjoleskap/{fridge.id}">
+								<a class="hover:undelrine" href="/fridges/{fridge.id}">
 									<span class="fridge-name">{fridge.name}</span>
 								</a>
 								<div class="fridge-actions">
