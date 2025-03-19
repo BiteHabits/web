@@ -6,7 +6,7 @@ describe('UserService', () => {
 	it('should return a user', async () => {
 		await givenUser({ id: 'user-1', name: 'user1', email: 'user1@email.com' });
 
-		const user = await getUserById('user-1');
+		const user = await UserService.byId('user-1');
 
 		expect(user).not.toBe(null);
 		expect(user?.id).toBe('user-1');
