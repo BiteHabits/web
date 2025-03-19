@@ -1,129 +1,121 @@
-import { db } from '$lib/db/drizzle'
-import { fridges, fridgeUsers } from '$lib/db/schemas'
+import { db } from '$lib/db/drizzle';
+import { fridges, fridgeUsers } from '$lib/db/schemas';
 import { eq } from 'drizzle-orm/sql';
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
 
 export class FridgeError extends Error {
-    constructor(message: string){
-        super(message);
-        this.name = 'FridgeError';
-    }
+	constructor(message: string) {
+		super(message);
+		this.name = 'FridgeError';
+	}
 }
 
-const authAdmin = async(fridgeId: string, userId: string) => {
-    const fridge = await db.query.fridges.findFirst({
-        where: (row, { eq }) => eq(row.id, fridgeId)
-    });
+const authAdmin = async (fridgeId: string, userId: string) => {
+	const fridge = await db.query.fridges.findFirst({
+		where: (row, { eq }) => eq(row.id, fridgeId)
+	});
 
-    if (!fridge || userId !== fridge.userId){
-        throw new FridgeError('Unauthorized')
-    }
-}
+	if (!fridge || userId !== fridge.userId) {
+		throw new FridgeError('Unauthorized');
+	}
+};
 
-const authMember = async(fridgeId: string, userId: string) => {
-    const isMember = await db.query.fridgeUsers.findFirst({
-        where: (row, { and, eq}) => and(
-            eq(row.fridge_id, fridgeId),
-            eq(row.user_id, userId)
-        )
-    });
+const authMember = async (fridgeId: string, userId: string) => {
+	const isMember = await db.query.fridgeUsers.findFirst({
+		where: (row, { and, eq }) => and(eq(row.fridge_id, fridgeId), eq(row.user_id, userId))
+	});
 
-    if (!isMember){
-        throw new FridgeError('Unauthorized - Not a fridge member')
-    }
-}
+	if (!isMember) {
+		throw new FridgeError('Unauthorized - Not a fridge member');
+	}
+};
 
 //Create
 //Create a new fridge set the creator as admin user
 //Add the creatorUser to the fridgeUsers table
-export const createFridge = async(name: string, CreatorUserId: string) => {
-    try{
-        let fridgeId = nanoid();
+export const createFridge = async (name: string, CreatorUserId: string) => {
+	try {
+		const fridgeId = nanoid();
 
-        await db.transaction(async (tx) => {
-            await tx.insert(fridges).values({
-                id: fridgeId,
-                name: name,
-                userId: CreatorUserId
-            });
-        
-            await tx.insert(fridgeUsers).values({
-                user_id: CreatorUserId,
-                fridge_id: fridgeId
-            });
-        });
+		await db.transaction(async (tx) => {
+			await tx.insert(fridges).values({
+				id: fridgeId,
+				name: name,
+				userId: CreatorUserId
+			});
 
-        return db.query.fridges.findFirst({
-            where: (row, { eq }) => eq(row.id, fridgeId)
-        });
-    } catch(error){
-        if (error instanceof Error && error.message.includes('UNIQUE constraint')){
-            throw new FridgeError('Fridge name already exists for this user')
-        }
-    throw new FridgeError('Could not create fridge')
-    } 
+			await tx.insert(fridgeUsers).values({
+				user_id: CreatorUserId,
+				fridge_id: fridgeId
+			});
+		});
+
+		return db.query.fridges.findFirst({
+			where: (row, { eq }) => eq(row.id, fridgeId)
+		});
+	} catch (error) {
+		if (error instanceof Error && error.message.includes('UNIQUE constraint')) {
+			throw new FridgeError('Fridge name already exists for this user');
+		}
+		throw new FridgeError('Could not create fridge');
+	}
 };
 
-export const addMemberToFridge = async(fridgeId: string, creatorId: string, members: string[]) =>{
-    await authAdmin(fridgeId,creatorId);
-    await db.transaction(async (tx)=>{
-         await tx.insert(fridgeUsers).values(
-            members.map(m => ({ fridge_id: fridgeId, user_id: m }))
-    )});
-    return db.query.fridgeUsers.findMany({
-        where: (row, { eq }) => eq(row.fridge_id, fridgeId)
-    })
-}
+export const addMemberToFridge = async (fridgeId: string, creatorId: string, members: string[]) => {
+	await authAdmin(fridgeId, creatorId);
+	await db.transaction(async (tx) => {
+		await tx.insert(fridgeUsers).values(members.map((m) => ({ fridge_id: fridgeId, user_id: m })));
+	});
+	return db.query.fridgeUsers.findMany({
+		where: (row, { eq }) => eq(row.fridge_id, fridgeId)
+	});
+};
 
 //Read
 //Return the fridgeInfo for the given fridgeId
-export const getFridgeById = async(fridgeId: string, userId: string) =>{
-    await authMember(fridgeId,userId);
-    const fridge = await db.query.fridges.findFirst({
-        where: (row, { eq }) => eq(row.id, fridgeId),
-            with: {
-            user: true,
-            fridgeUsers: {
-                columns: { user_id: true },
-                with: {user: true }
-            }
-        }
-    });
+export const getFridgeById = async (fridgeId: string, userId: string) => {
+	await authMember(fridgeId, userId);
+	const fridge = await db.query.fridges.findFirst({
+		where: (row, { eq }) => eq(row.id, fridgeId),
+		with: {
+			user: true,
+			fridgeUsers: {
+				columns: { user_id: true },
+				with: { user: true }
+			}
+		}
+	});
 
-    if (!fridge){
-        return null;
-    }
+	if (!fridge) {
+		return null;
+	}
 
-    return {
-        id: fridge.id,
-        name: fridge.name,
-        creator: fridge.userId,
-        members: fridge.fridgeUsers
-    };
+	return {
+		id: fridge.id,
+		name: fridge.name,
+		creator: fridge.userId,
+		members: fridge.fridgeUsers
+	};
 };
 
 //Update
-//Update the fridge with the given fridgeId only if the User doing it is the 
+//Update the fridge with the given fridgeId only if the User doing it is the
 //creator of the fridge
-export const updateFridge = async(fridgeId: string, name: string, userId: string) =>{
-    await authAdmin(fridgeId, userId);
+export const updateFridge = async (fridgeId: string, name: string, userId: string) => {
+	await authAdmin(fridgeId, userId);
 
-    return db.update(fridges)
-        .set({ name })
-        .where(eq(fridges.id, fridgeId))
-}
+	return db.update(fridges).set({ name }).where(eq(fridges.id, fridgeId));
+};
 
 //Delete
-//Delete the fridge with the given fridgeId only if the 
+//Delete the fridge with the given fridgeId only if the
 //user doing it is the creatorUser
-export const deleteFridge = async(fridgeId: string, userId: string) =>{
-    await authAdmin(fridgeId, userId);
+export const deleteFridge = async (fridgeId: string, userId: string) => {
+	await authAdmin(fridgeId, userId);
 
-    return db.transaction(async (tx) => {
-        await tx.delete(fridgeUsers)
-        .where(eq(fridgeUsers.fridge_id, fridgeId));
-    
-        return tx.delete(fridges)
-        .where(eq(fridges.id,fridgeId))
-    })
-}
+	return db.transaction(async (tx) => {
+		await tx.delete(fridgeUsers).where(eq(fridgeUsers.fridge_id, fridgeId));
+
+		return tx.delete(fridges).where(eq(fridges.id, fridgeId));
+	});
+};

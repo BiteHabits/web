@@ -24,7 +24,7 @@ export const fridgesRelations = relations(fridges, ({ one, many }) => ({
 		references: [users.id]
 	}),
 
-    fridgeUsers: many(fridgeUsers)
+	fridgeUsers: many(fridgeUsers)
 }));
 
 export type Fridge = InferSelectModel<typeof fridges>;
