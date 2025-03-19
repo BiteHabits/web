@@ -15,7 +15,7 @@
 
 <div class="container">
 	<!-- Navigation to Create Fridge -->
-	<a href="/kjoleskap/ny" class="create-fridge-button"> Opprett nytt kjøleskap </a>
+	<a href="/fridges/new" class="create-fridge-button"> Opprett nytt kjøleskap </a>
 
 	<!-- Fridges List -->
 	<div class="fridges-list">
@@ -28,7 +28,9 @@
 					<li>
 						<div class="fridge-item">
 							<div class="fridge-header">
-								<span class="fridge-name">{fridge.name}</span>
+								<a class="hover:undelrine" href="/fridges/{fridge.id}">
+									<span class="fridge-name">{fridge.name}</span>
+								</a>
 								<div class="fridge-actions">
 									<button class="share-button" onclick={() => toggleShareForm(fridge.id)}>
 										{activeSharingFridgeId === fridge.id ? 'Skjul deling' : 'Del'}
