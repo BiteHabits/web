@@ -1,6 +1,6 @@
 import { givenUser } from './fixtures/users';
 import { describe, expect, it } from 'vitest';
-import { getUserById, createUser, updateUser, deleteUser } from '$lib/services/user.service';
+import { UserService } from '$lib/services';
 
 describe('UserService', () => {
 	it('should return a user', async () => {
