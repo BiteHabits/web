@@ -14,9 +14,9 @@ test('user can create fridge', async ({ page }) => {
 
 	const header = page.locator('header');
 	await expect(header).toContainText('Kjøleskap');
-	await header.getByText('Kjøleskap').click();
+	await header.getByRole('link', { name: 'Kjøleskap' }).click();
 
-	await page.waitForURL('/kjoleskap');
+	await page.waitForURL('/fridges');
 
 	await expect(page.locator('p')).toContainText('Du har ingen kjøleskap ennå.');
 
@@ -25,7 +25,7 @@ test('user can create fridge', async ({ page }) => {
 	await page.locator("input[name='name']").fill('Foobar');
 	await page.locator('button', { hasText: 'Opprett kjøleskap' }).click();
 
-	await page.waitForURL('/kjoleskap');
+	await page.waitForURL('/fridges');
 
 	await expect(page.locator('ul').locator('li').first()).toContainText('Foobar');
 });

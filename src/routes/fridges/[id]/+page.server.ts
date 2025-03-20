@@ -1,9 +1,32 @@
 import { db } from '$lib/db/drizzle';
-import type { Actions } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
+import type { Actions, PageServerLoad } from './$types';
+import { error } from '@sveltejs/kit';
 import { products } from '$lib/db/schemas';
 
+export const load: PageServerLoad = async ({ params }) => {
+	const fridgeId = params.id;
+
+	const fridge = await db.query.fridges.findFirst({
+		where: (row, { eq }) => eq(row.id, fridgeId)
+	});
+
+	if (!fridge) {
+		throw error(404, 'Fant ikke kjøleskap');
+	}
+
+	const products = await db.query.products.findMany({
+		where: (fields) => eq(fields.fridgeId, fridgeId)
+	});
+
+	return {
+		fridge,
+		products
+	};
+};
+
 export const actions: Actions = {
-	default: async ({ request, locals }) => {
+	default: async ({ request, locals, params }) => {
 		const user = locals.auth?.user;
 		if (!user) {
 			return {
@@ -16,9 +39,8 @@ export const actions: Actions = {
 		const name = formData.get('name') as string | null;
 		const expiryDate = formData.get('expiry_date') as string | null;
 		const quantity = formData.get('quantity') as string | null;
-		const fridgeId = formData.get('fridge_id') as string | null;
 
-		if (!name || !expiryDate || !quantity || !fridgeId) {
+		if (!name || !expiryDate || !quantity) {
 			return {
 				success: false,
 				error: 'Invalid input'
@@ -37,7 +59,7 @@ export const actions: Actions = {
 			name,
 			expiresAt: expiryDate,
 			quantity: quantityNumber,
-			fridgeId: fridgeId
+			fridgeId: params.id
 		});
 
 		return {
