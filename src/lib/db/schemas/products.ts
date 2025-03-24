@@ -6,7 +6,7 @@ import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 export const products = sqliteTable('product', {
 	id: text().primaryKey().$defaultFn(nanoid),
 	name: text('name').notNull(),
-	expiresAt: integer({ mode: 'timestamp' }).notNull(),
+	expiryDate: integer({ mode: 'timestamp' }).notNull(),
 	quantity: integer('quantity').notNull(),
 	fridgeId: text('fridge_id')
 		.notNull()

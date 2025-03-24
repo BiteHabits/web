@@ -17,7 +17,7 @@ export const getProductById = async (productId: string) => {
 		return null;
 	}
 
-	if (product.expiresAt && isPast(product.expiresAt)) {
+	if (product.expiryDate && isPast(product.expiryDate)) {
 		await db.delete(products).where(eq(products.id, productId));
 		return null;
 	}
@@ -44,7 +44,7 @@ export const getProductsFromFridge = async (fridgeId: string) => {
 
 	const filteredProducts = productsFromFridge
 		.filter((product) => {
-			if (product.expiresAt && isPast(product.expiresAt)) {
+			if (product.expiryDate && isPast(product.expiryDate)) {
 				db.delete(products).where(eq(products.id, product.id));
 				return false;
 			}
@@ -77,7 +77,7 @@ export const updateProduct = async (productId: string, product: ProductInsert) =
 		.update(products)
 		.set({
 			name: product.name,
-			expiresAt: product.expiresAt,
+			expiryDate: product.expiryDate,
 			quantity: product.quantity,
 			fridgeId: product.fridgeId
 		})
@@ -88,17 +88,16 @@ export const updateProduct = async (productId: string, product: ProductInsert) =
 };
 
 export const createProduct = async (fridgeId: string, product: ProductInsert) => {
-	if (!product) {
-		return null;
-	}
+	const [newProduct] = await db
+		.insert(products)
+		.values({
+			id: product.id ?? nanoid(),
+			name: product.name,
+			expiryDate: product.expiryDate,
+			quantity: product.quantity,
+			fridgeId
+		})
+		.returning();
 
-	const new_Product = await db.insert(products).values({
-		id: product.id ?? nanoid(),
-		name: product.name,
-		expiresAt: product.expiresAt,
-		quantity: product.quantity,
-		fridgeId: fridgeId
-	});
-
-	return new_Product;
+	return newProduct;
 };

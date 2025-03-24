@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { givenProduct } from './fixtures/product';
+import { givenFridge } from './fixtures/fridge';
+import { givenUser } from './fixtures/users';
 
 import {
 	createProduct,
@@ -11,36 +13,43 @@ import {
 
 describe('ProductService', () => {
 	it('should return a product', async () => {
-		const fridgeId = '0';
-		await givenProduct(fridgeId, { id: 'Product-1', name: 'TestProduct' });
+		const user = await givenUser({ id: 'user-1' });
+		const fridge = await givenFridge(user, { id: 'Fridge-1', name: 'TestFridge' });
+
+		await givenProduct(fridge.id, { id: 'Product-1', name: 'TestProduct' });
 
 		const product = await getProductById('Product-1');
 
 		expect(product).not.toBe(null);
 		expect(product?.id).toBe('Product-1');
 		expect(product?.name).toBe('TestProduct');
-		expect(product?.fridgeId).toBe(fridgeId);
+		expect(product?.fridgeId).toBe(fridge.id);
 	});
 
 	it('should return a product from a fridge', async () => {
-		const fridgeId = '0';
-		await givenProduct(fridgeId, { id: 'Product-1', name: 'TestProduct' });
+		const user = await givenUser({ id: 'user-1' });
+		const fridge = await givenFridge(user, { id: 'Fridge-1', name: 'TestFridge' });
 
-		const product = await getProductsFromFridge(fridgeId);
+		await givenProduct(fridge.id, { id: 'Product-1', name: 'TestProduct' });
+
+		const product = await getProductsFromFridge(fridge.id);
 
 		expect(product).not.toBe(null);
 		expect(product[0].product.id).toBe('Product-1');
 		expect(product[0].product.name).toBe('TestProduct');
-		expect(product[0].fridgeId).toBe(fridgeId);
+		expect(product[0].fridgeId).toBe(fridge.id);
 	});
 
 	it('should create a product', async () => {
-		const createdProduct = await createProduct('Fridge-1', {
+		const user = await givenUser({ id: 'user-1' });
+		const fridge = await givenFridge(user, { id: 'Fridge-1', name: 'TestFridge' });
+
+		const createdProduct = await createProduct(fridge.id, {
+			id: 'Product-1',
 			name: 'TestProduct',
-			id: '0',
-			expiresAt: Date.now(),
+			expiryDate: new Date(),
 			quantity: 1,
-			fridgeId: '0'
+			fridgeId: fridge.id
 		});
 
 		expect(createdProduct).not.toBeNull();
@@ -50,18 +59,20 @@ describe('ProductService', () => {
 		const foundProduct = await getProductById(createdProduct?.id ?? 'Feil');
 
 		expect(foundProduct).not.toBeNull();
-		expect(foundProduct?.name).toBe('Product-1');
-		expect(foundProduct?.fridgeId).toBe('Fridge-1');
+		expect(foundProduct?.name).toBe('TestProduct');
+		expect(foundProduct?.fridgeId).toBe(fridge.id);
 	});
 
 	it('should update the name of the product', async () => {
-		const fridgeId = '0';
-		await givenProduct(fridgeId, { id: 'Product-1', name: 'TestProduct' });
+		const user = await givenUser({ id: 'user-1' });
+		const fridge = await givenFridge(user, { id: 'Fridge-1', name: 'TestFridge' });
+
+		await givenProduct(fridge.id, { id: 'Product-1', name: 'TestProduct' });
 
 		const updatedProduct = await updateProduct('Product-1', {
 			name: 'new-name',
 			id: '0',
-			expiresAt: Date.now(),
+			expiryDate: new Date(),
 			quantity: 1,
 			fridgeId: '0'
 		});
@@ -72,12 +83,14 @@ describe('ProductService', () => {
 
 		expect(foundProduct).not.toBeNull();
 		expect(foundProduct?.name).toBe('new-name');
-		expect(foundProduct?.fridgeId).toBe(fridgeId);
+		expect(foundProduct?.fridgeId).toBe(fridge.id);
 	});
 
 	it('should delete a product', async () => {
-		const fridgeId = '0';
-		const product = await givenProduct(fridgeId, { id: 'Product-1', name: 'TestProduct' });
+		const user = await givenUser({ id: 'user-1' });
+		const fridge = await givenFridge(user, { id: 'Fridge-1', name: 'TestFridge' });
+
+		const product = await givenProduct(fridge.id, { id: 'Product-1', name: 'TestProduct' });
 
 		const deletedProduct = await deleteProduct(product.id);
 
