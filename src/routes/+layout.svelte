@@ -3,6 +3,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import { writable } from 'svelte/store';
 	import { setUserContext } from '$lib/context/user-context';
+	import { Toaster } from 'svelte-french-toast';
 
 	let { data, children } = $props();
 
@@ -13,6 +14,7 @@
 	setUserContext(user);
 </script>
 
+<Toaster position="top-center" />
 <Header />
 
 {@render children()}

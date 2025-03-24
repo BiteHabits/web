@@ -1,13 +1,14 @@
 import { db } from '$lib/db/drizzle';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
-import { fridges } from '$lib/db/schemas';
+import { fridges, fridgeUsers } from '$lib/db/schemas';
+import { nanoid } from 'nanoid';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
 		const userId = locals.auth?.user.id;
 		if (!userId) {
 			return fail(401, {
-				succses: false,
+				success: false,
 				error: 'You must be logged in to create a fridge.'
 			});
 		}
@@ -22,9 +23,17 @@ export const actions: Actions = {
 			});
 		}
 		try {
+			const fridgeId = nanoid();
+
 			await db.insert(fridges).values({
+				id: fridgeId,
 				name,
 				userId
+			});
+
+			await db.insert(fridgeUsers).values({
+				fridge_id: fridgeId,
+				user_id: userId
 			});
 		} catch {
 			return fail(500, {
@@ -32,6 +41,6 @@ export const actions: Actions = {
 			});
 		}
 
-		throw redirect(303, `/kjoleskap`);
+		throw redirect(303, '/fridges');
 	}
 };

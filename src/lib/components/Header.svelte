@@ -17,7 +17,7 @@
 
 		{#if !!$user}
 			<li>
-				<a class="text-gray-700 hover:text-gray-900" href="/kjoleskap">Kjøleskap</a>
+				<a class="text-gray-700 hover:text-gray-900" href="/fridges">Kjøleskap</a>
 			</li>
 
 			<li>

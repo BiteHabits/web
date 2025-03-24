@@ -32,8 +32,8 @@
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/node": "^20.14.8",
 		"autoprefixer": "^10.4.20",
-		"drizzle-dbml-generator": "^0.10.0",
 		"dotenv": "^16.4.7",
+		"drizzle-dbml-generator": "^0.10.0",
 		"drizzle-kit": "^0.30.4",
 		"drizzle-seed": "^0.3.1",
 		"eslint": "^9.7.0",
@@ -60,7 +60,8 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"date-fns": "^4.1.0",
 		"drizzle-orm": "^0.39.3",
-		"nanoid": "^5.1.0"
+		"nanoid": "^5.1.0",
+		"svelte-french-toast": "^1.2.0"
 	},
 	"packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }
