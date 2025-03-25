@@ -50,7 +50,7 @@ table user {
 
 ref: fridge_user.user_id - user.id
 
-ref: fridge_user.fridge_id - fridge.id
+ref: fridge_user.fridge_id > fridge.id
 
 ref: fridge.userId - user.id
 

@@ -2,6 +2,7 @@ import { relations, type InferSelectModel } from 'drizzle-orm';
 import { sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import { users } from './users';
+import { fridgeUsers } from './fridge-users';
 
 export const fridges = sqliteTable(
 	'fridge',
@@ -17,11 +18,14 @@ export const fridges = sqliteTable(
 	})
 );
 
-export const fridgesRelations = relations(fridges, ({ one }) => ({
+export const fridgesRelations = relations(fridges, ({ one, many }) => ({
 	user: one(users, {
 		fields: [fridges.userId],
 		references: [users.id]
-	})
+	}),
+
+	fridgeUsers: many(fridgeUsers)
 }));
 
 export type Fridge = InferSelectModel<typeof fridges>;
+export type FridgeInsert = InferSelectModel<typeof fridges>;
