@@ -1,39 +1,41 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import ProductCard from '$lib/components/ProductCard.svelte';
+	import AddProductForm from '$lib/components/AddProductForm.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	let { data } = $props();
 	let { fridge, products } = $derived(data);
+
+	let addProductVisable = $state<boolean>(false);
+
+	function toggleAddProduct() {
+		addProductVisable = !addProductVisable 
+	}
 </script>
+<div class="flex justify-between items-center p-4">
+	<h1 class="text-3xl">Products in {fridge.name}</h1>
+	<Button text={addProductVisable ? 'Hide' : 'Legg til vare'} onClick={toggleAddProduct} />
+</div>
 
-<h1>Products in {fridge.name}</h1>
+{#if addProductVisable}
+	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+		<div class="relative bg-white rounded-lg p-6 w-full max-w-md shadow-xl">
+			<button
+				class="absolute top-3 right-4 text-gray-600 hover:text-black text-xl"
+				onclick={toggleAddProduct}
+			>
+				&times;
+			</button>
 
-<h1>Register Product</h1>
+			<AddProductForm fridgeId={fridge.id} onSuccess={toggleAddProduct}/>
+		</div>
+	</div>
+{/if}
 
-<form class="mx-auto flex max-w-md flex-col gap-4" method="post" use:enhance>
-	<label class="flex flex-col">
-		Name
-		<input name="name" class="rounded border p-1" required />
-	</label>
 
-	<label class="flex flex-col">
-		Expiry Date
-		<input type="date" name="expiry_date" class="rounded border p-1" required />
-	</label>
-
-	<label class="flex flex-col">
-		Quantity
-		<input type="number" name="quantity" class="rounded border p-1" required />
-	</label>
-
-	<button class="rounded bg-blue-500 p-1">Register Product</button>
-</form>
-
-<hr />
-
-<ul>
+<div class="grid grid-cols-3 gap-4 p-4">
 	{#each products as product}
-		<li>
-			<strong>{product.name}</strong> - {product.quantity} units, expires on {product.expiresAt}
-		</li>
+		<ProductCard {product} />
 	{/each}
-</ul>
+
+</div>

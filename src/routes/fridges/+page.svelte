@@ -4,20 +4,16 @@
 	let { data } = $props();
 	let fridges = $derived(data.fridges);
 
-	// Track which fridge's share form is currently visible (null means none are visible)
 	let activeSharingFridgeId = $state<string | null>(null);
 
-	// Toggle share form visibility
 	function toggleShareForm(fridgeId: string) {
 		activeSharingFridgeId = activeSharingFridgeId === fridgeId ? null : fridgeId;
 	}
 </script>
 
 <div class="container">
-	<!-- Navigation to Create Fridge -->
 	<a href="/fridges/new" class="create-fridge-button"> Opprett nytt kjøleskap </a>
 
-	<!-- Fridges List -->
 	<div class="fridges-list">
 		{#if fridges === undefined || fridges.length === 0}
 			<p>Du har ingen kjøleskap ennå. Opprett ditt første!</p>
