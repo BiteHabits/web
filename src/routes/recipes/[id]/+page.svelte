@@ -7,8 +7,11 @@
 	<section class="absolute left-6 top-6 flex flex-col bg-yellow-100 rounded-xl shadow-md w-72 overflow-hidden">
 		<h2 class="font-semibold text-lg px-4 py-3 border-b-4 border-yellow-200">Ingredienser</h2>
 		<ul class="divide-y divide-gray-300">
-			{#each recipe.ingredients as ingredient}
-				<li class="px-4 py-2">{ingredient.name}</li>
+			{#each recipe.ingredients as ingredient, i}
+				<li class="px-4 py-2 flex items-center gap-2">
+					<input type="checkbox" id="ingredient-{i}" class="form-checkbox accent-green-500" />
+					<label for="ingredient-{i}" class="cursor-pointer">{ingredient.name}</label>
+				</li>
 			{/each}
 		</ul>
 	</section>
