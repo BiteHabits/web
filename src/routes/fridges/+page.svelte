@@ -1,106 +1,30 @@
 <script lang="ts">
-	import ShareFridgeForm from '$lib/components/ShareFridgeForm.svelte';
-
 	let { data } = $props();
 	let fridges = $derived(data.fridges);
-
-	let activeSharingFridgeId = $state<string | null>(null);
-
-	function toggleShareForm(fridgeId: string) {
-		activeSharingFridgeId = activeSharingFridgeId === fridgeId ? null : fridgeId;
-	}
 </script>
 
-<div class="container">
-	<a href="/fridges/new" class="create-fridge-button"> Opprett nytt kjøleskap </a>
+<div class="max-w-xl mx-auto p-5">
+	<a
+		href="/fridges/new"
+		class="inline-block mb-5 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+	>
+		Opprett nytt kjøleskap
+	</a>
 
-	<div class="fridges-list">
+	<div>
 		{#if fridges === undefined || fridges.length === 0}
 			<p>Du har ingen kjøleskap ennå. Opprett ditt første!</p>
 		{:else}
-			<h2>Dine kjøleskap:</h2>
-			<ul>
+			<h2 class="text-lg font-semibold mb-3">Dine kjøleskap:</h2>
+			<ul class="space-y-3">
 				{#each fridges as fridge}
-					<li>
-						<div class="fridge-item">
-							<div class="fridge-header">
-								<a class="hover:undelrine" href="/fridges/{fridge.id}">
-									<span class="fridge-name">{fridge.name}</span>
-								</a>
-								<div class="fridge-actions">
-									<button class="share-button" onclick={() => toggleShareForm(fridge.id)}>
-										{activeSharingFridgeId === fridge.id ? 'Skjul deling' : 'Del'}
-									</button>
-								</div>
-							</div>
-
-							{#if activeSharingFridgeId === fridge.id}
-								<div class="share-form-container">
-									<ShareFridgeForm fridgeId={fridge.id} />
-								</div>
-							{/if}
-						</div>
+					<li class="bg-gray-100 rounded">
+						<a class="w-full h-full hover:bg-slate-50 p-4 block rounded" href="/fridges/{fridge.id}">
+							{fridge.name}
+						</a>
 					</li>
 				{/each}
 			</ul>
 		{/if}
 	</div>
 </div>
-
-<style>
-	.container {
-		max-width: 600px;
-		margin: 0 auto;
-		padding: 20px;
-	}
-
-	.create-fridge-button {
-		display: inline-block;
-		padding: 10px 15px;
-		background-color: #4caf50;
-		color: white;
-		text-decoration: none;
-		border-radius: 4px;
-		margin-bottom: 20px;
-	}
-
-	.create-fridge-button:hover {
-		background-color: #45a049;
-	}
-
-	.fridges-list ul {
-		list-style-type: none;
-		padding: 0;
-	}
-
-	.fridges-list li {
-		background-color: #f1f1f1;
-		margin: 10px 0;
-		padding: 15px;
-		border-radius: 4px;
-	}
-
-	.fridge-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 10px;
-	}
-
-	.fridge-actions {
-		display: flex;
-		gap: 10px;
-	}
-
-	.share-button {
-		background-color: #4caf50;
-		color: white;
-		padding: 5px 10px;
-		border-radius: 4px;
-		font-size: 0.9em;
-	}
-
-	.share-button:hover {
-		background-color: #45a049;
-	}
-</style>

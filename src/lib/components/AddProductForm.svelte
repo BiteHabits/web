@@ -2,12 +2,12 @@
     import { enhance } from "$app/forms";
     import Button from "./Button.svelte";
 
-    let { fridgeId, onSuccess}: { fridgeId: string, onSuccess: () => void } = $props();
+    let { fridgeId}: { fridgeId: string } = $props();
 
 </script>
 <h1 class="font-bold">Register Product</h1>
 
-<form class="flex w-full flex-col gap-4" method="post" use:enhance onsubmit={() => onSuccess()}>
+<form class="flex w-full flex-col gap-4" method="post" use:enhance>
     <label class="flex flex-col">
         Name
         <input name="name" class="rounded border p-1" required />
