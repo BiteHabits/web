@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from './Button.svelte';
-
-	let { fridgeId }: { fridgeId: string } = $props();
 </script>
 
 <h1 class="font-bold">Register Product</h1>
