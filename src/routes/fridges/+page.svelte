@@ -3,10 +3,10 @@
 	let fridges = $derived(data.fridges);
 </script>
 
-<div class="max-w-xl mx-auto p-5">
+<div class="mx-auto max-w-xl p-5">
 	<a
 		href="/fridges/new"
-		class="inline-block mb-5 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+		class="mb-5 inline-block rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
 	>
 		Opprett nytt kjøleskap
 	</a>
@@ -15,11 +15,14 @@
 		{#if fridges === undefined || fridges.length === 0}
 			<p>Du har ingen kjøleskap ennå. Opprett ditt første!</p>
 		{:else}
-			<h2 class="text-lg font-semibold mb-3">Dine kjøleskap:</h2>
+			<h2 class="mb-3 text-lg font-semibold">Dine kjøleskap:</h2>
 			<ul class="space-y-3">
 				{#each fridges as fridge}
-					<li class="bg-gray-100 rounded">
-						<a class="w-full h-full hover:bg-slate-50 p-4 block rounded" href="/fridges/{fridge.id}">
+					<li class="rounded bg-gray-100">
+						<a
+							class="block h-full w-full rounded p-4 hover:bg-slate-50"
+							href="/fridges/{fridge.id}"
+						>
 							{fridge.name}
 						</a>
 					</li>

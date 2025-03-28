@@ -11,7 +11,7 @@
 	let addProductVisable = $state<boolean>(false);
 
 	function toggleAddProduct() {
-		addProductVisable = !addProductVisable 
+		addProductVisable = !addProductVisable;
 	}
 
 	let activeSharingFridgeId = $state<string | null>(null);
@@ -20,33 +20,35 @@
 		activeSharingFridgeId = activeSharingFridgeId === fridgeId ? null : fridgeId;
 	}
 </script>
-<div class="flex justify-between items-center p-4">
+
+<div class="flex items-center justify-between p-4">
 	<h1 class="text-3xl">Kjøleskap {fridge.name}</h1>
-	<div class="flex gap-4 flex-col">
-		<Button text='Del' onClick={() => toggleShareForm(fridge.id)} />
-		<Button text='Legg til vare' onClick={toggleAddProduct} />
+	<div class="flex flex-col gap-4">
+		<Button text="Del" onClick={() => toggleShareForm(fridge.id)} />
+		<Button text="Legg til vare" onClick={toggleAddProduct} />
 	</div>
 </div>
 
 {#if addProductVisable}
 	<Modal showModal={() => toggleAddProduct()}>
-		<AddProductForm fridgeId={fridge.id}/>
+		<AddProductForm fridgeId={fridge.id} />
 	</Modal>
 {/if}
 
 {#if activeSharingFridgeId === fridge.id}
-    <Modal showModal={() => toggleShareForm(fridge.id)}>
-        <ShareFridgeForm fridgeId={fridge.id} />
-    </Modal>
+	<Modal showModal={() => toggleShareForm(fridge.id)}>
+		<ShareFridgeForm fridgeId={fridge.id} />
+	</Modal>
 {/if}
 
 {#if products === undefined || products.length === 0}
-	<p class="p-4 w-full h-full flex justify-center">Du har ingen produkter i dette kjøleskapet ennå. Legg til ditt første!</p>
+	<p class="flex h-full w-full justify-center p-4">
+		Du har ingen produkter i dette kjøleskapet ennå. Legg til ditt første!
+	</p>
 {/if}
 
 <div class="grid grid-cols-3 gap-4 p-4">
 	{#each products as product}
 		<ProductCard {product} />
 	{/each}
-
 </div>

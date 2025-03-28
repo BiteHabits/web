@@ -6,24 +6,24 @@
 	let user = getUser();
 </script>
 
-<header class="flex items-end justify-between h-32 p-4 bg-green-300 mb-10">
-	<div class="flex items-center gap-1 flex-col">
+<header class="mb-10 flex h-32 items-end justify-between bg-green-300 p-4">
+	<div class="flex flex-col items-center gap-1">
 		<a href="/"><img src={Logo} class="h-16 w-16" alt="BiteHabits logo" /></a>
 		<h1 class="font-bold">BiteHabits</h1>
 	</div>
 
-	<menu class="flex items-center gap-12 flex-row">
+	<menu class="flex flex-row items-center gap-12">
 		{#if $user}
-			<li class="p-4 border-2 border-gray-700 rounded-lg hover:bg-green-500">
+			<li class="rounded-lg border-2 border-gray-700 p-4 hover:bg-green-500">
 				<a class="p-4 text-gray-700 hover:text-gray-900" href="/recipes">Oppskrifter</a>
 			</li>
-			<li class="p-4 border-2 border-gray-700 rounded-lg hover:bg-green-500">
+			<li class="rounded-lg border-2 border-gray-700 p-4 hover:bg-green-500">
 				<a class="p-4 text-gray-700 hover:text-gray-900" href="/fridges">Kjøleskap</a>
 			</li>
 		{/if}
 	</menu>
 	{#if $user}
-		<menu class="flex items-center flex-col">
+		<menu class="flex flex-col items-center">
 			<li>
 				<img src={UserIcon} alt="user icon" />
 			</li>

@@ -4,11 +4,13 @@
 </script>
 
 <main class="relative flex justify-center">
-	<section class="absolute left-6 top-6 flex flex-col bg-yellow-100 rounded-xl shadow-md w-72 overflow-hidden">
-		<h2 class="font-semibold text-lg px-4 py-3 border-b-4 border-yellow-200">Ingredienser</h2>
+	<section
+		class="absolute left-6 top-6 flex w-72 flex-col overflow-hidden rounded-xl bg-yellow-100 shadow-md"
+	>
+		<h2 class="border-b-4 border-yellow-200 px-4 py-3 text-lg font-semibold">Ingredienser</h2>
 		<ul class="divide-y divide-gray-300">
 			{#each recipe.ingredients as ingredient, i}
-				<li class="px-4 py-2 flex items-center gap-2">
+				<li class="flex items-center gap-2 px-4 py-2">
 					<input type="checkbox" id="ingredient-{i}" class="form-checkbox accent-green-500" />
 					<label for="ingredient-{i}" class="cursor-pointer">{ingredient.name}</label>
 				</li>
@@ -16,14 +18,14 @@
 		</ul>
 	</section>
 
-	<section class="flex flex-col items-center gap-6 max-w-2xl text-center py-8">
-		<img src={recipe.image} alt="recipe" class="w-96 h-96 object-cover rounded-lg border" />
-		
+	<section class="flex max-w-2xl flex-col items-center gap-6 py-8 text-center">
+		<img src={recipe.image} alt="recipe" class="h-96 w-96 rounded-lg border object-cover" />
+
 		<h1 class="text-2xl font-bold">{recipe.name}</h1>
 
-		<section class="flex flex-col gap-4 items-center">
-			<h2 class="font-semibold text-lg">Slik gjør du det:</h2>
-			<ol class="list-decimal text-left list-inside space-y-2 px-4">
+		<section class="flex flex-col items-center gap-4">
+			<h2 class="text-lg font-semibold">Slik gjør du det:</h2>
+			<ol class="list-inside list-decimal space-y-2 px-4 text-left">
 				{#each recipe.steps as step}
 					<li>{step}</li>
 				{/each}
@@ -31,4 +33,3 @@
 		</section>
 	</section>
 </main>
-

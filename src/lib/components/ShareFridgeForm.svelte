@@ -29,12 +29,7 @@
 </script>
 
 <div class="w-full">
-	<form
-		method="POST"
-		action="?/shareFridge"
-		use:enhance={handleSubmit}
-		class="flex flex-col gap-4"
-	>
+	<form method="POST" action="?/shareFridge" use:enhance={handleSubmit} class="flex flex-col gap-4">
 		<input type="hidden" name="fridge_id" value={fridgeId} />
 
 		<label for="email" class="block font-bold">Bruker e-post</label>
