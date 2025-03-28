@@ -1,4 +1,4 @@
-import { relations, type InferSelectModel } from 'drizzle-orm';
+import { relations, type InferSelectModel, type InferInsertModel } from 'drizzle-orm';
 import { sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import { users } from './users';
@@ -28,4 +28,4 @@ export const fridgesRelations = relations(fridges, ({ one, many }) => ({
 }));
 
 export type Fridge = InferSelectModel<typeof fridges>;
-export type FridgeInsert = InferSelectModel<typeof fridges>;
+export type FridgeInsert = InferInsertModel<typeof fridges>;
