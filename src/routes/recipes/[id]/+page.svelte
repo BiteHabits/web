@@ -1,5 +1,17 @@
 <script lang="ts">
-	export let data;
+	type Props = {
+		data: {
+			recipe: {
+				id: string;
+				name: string;
+				image: string;
+				ingredients: { name: string }[];
+				steps: string[];
+			};
+		};
+	};
+
+	let { data }: Props = $props();
 	const recipe = data.recipe;
 </script>
 
