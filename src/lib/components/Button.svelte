@@ -1,6 +1,5 @@
 <script lang="ts">
-	export let text: string;
-	export let onClick: (() => void) | null;
+	let { text, onClick }: { text: string, onClick: (() => void) | null } = $props();
 </script>
 
 <button
