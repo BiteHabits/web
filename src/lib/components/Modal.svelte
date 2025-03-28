@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let showModal: () => void;
+	let { showModal }: { showModal: () => void } = $props();
 </script>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
