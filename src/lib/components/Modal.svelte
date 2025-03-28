@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
+	import type { Snippet } from 'svelte';
 
 	let { showModal, children }: { showModal: () => void; children: Snippet } = $props();
 </script>
