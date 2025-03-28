@@ -12,18 +12,18 @@
 
 	let { product }: Props = $props();
 
-	let expired = $state('');
+	let expired = $derived.by(() => {
+		const diffInMs = new Date(product.expiresAt).getTime() - new Date().getTime();
+		const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
-	const diffInMs = new Date(product.expiresAt).getTime() - new Date().getTime();
-	const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+		if (diffInDays <= 1) {
+			return 'text-red-500';
+		} else if (diffInDays <= 3) {
+			return 'text-yellow-500';
+		}
 
-	if (diffInDays <= 1) {
-		expired = 'text-red-500';
-	} else if (diffInDays <= 3) {
-		expired = 'text-yellow-500';
-	} else {
-		expired = '';
-	}
+		return '';
+	});
 </script>
 
 <div class="rounded-lg border-2 border-gray-200 p-4">
