@@ -17,11 +17,6 @@
 			<li class="p-4 border-2 border-gray-700 rounded-lg hover:bg-green-500">
 				<a class="p-4 text-gray-700 hover:text-gray-900" href="/recipes">Oppskrifter</a>
 			</li>
-
-			<li class="p-4 border-2 border-gray-700 rounded-lg hover:bg-green-500">
-				<a class="p-4 text-gray-700 hover:text-gray-900" href="/add-product">Legg til varer</a>
-			</li>
-
 			<li class="p-4 border-2 border-gray-700 rounded-lg hover:bg-green-500">
 				<a class="p-4 text-gray-700 hover:text-gray-900" href="/fridges">Kjøleskap</a>
 			</li>
