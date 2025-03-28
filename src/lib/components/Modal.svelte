@@ -1,5 +1,7 @@
 <script lang="ts">
-	let { showModal, children }: { showModal: () => void; children: () => any } = $props();
+	import type { Snippet } from "svelte";
+
+	let { showModal, children }: { showModal: () => void; children: Snippet } = $props();
 </script>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
