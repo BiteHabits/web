@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { text, onClick }: { text: string, onClick: (() => void) | null } = $props();
+	let { text, onClick }: { text: string; onClick: (() => void) | null } = $props();
 </script>
 
 <button

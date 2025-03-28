@@ -30,7 +30,7 @@
 	<div class="flex flex-col gap-2">
 		<h3 class="text-lg font-bold">{product.name}</h3>
 		<p>{product.quantity} stykk</p>
-		{#if diffInDays > 0}
+		{#if expired !== ''}
 			<p class={expired}>Best før: {translateDate(product.expiresAt)}</p>
 		{:else}
 			<p class="text-red-500">Utløpt</p>

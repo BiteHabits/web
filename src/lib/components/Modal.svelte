@@ -1,16 +1,16 @@
 <script lang="ts">
-	let { showModal }: { showModal: () => void } = $props();
+	let { showModal, children }: { showModal: () => void; children: () => any } = $props();
 </script>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 	<div class="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
 		<button
 			class="absolute right-4 top-3 text-xl text-gray-600 hover:text-black"
-			on:click={showModal}
+			onclick={showModal}
 		>
 			&times;
 		</button>
 
-		<slot />
+		{@render children?.()}
 	</div>
 </div>
