@@ -28,4 +28,3 @@ export const fridgesRelations = relations(fridges, ({ one, many }) => ({
 }));
 
 export type Fridge = InferSelectModel<typeof fridges>;
-export type FridgeInsert = InferInsertModel<typeof fridges>;

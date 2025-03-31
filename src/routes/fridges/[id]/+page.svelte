@@ -1,39 +1,54 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import ProductCard from '$lib/components/ProductCard.svelte';
+	import AddProductForm from '$lib/components/AddProductForm.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import ShareFridgeForm from '$lib/components/ShareFridgeForm.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 
 	let { data } = $props();
 	let { fridge, products } = $derived(data);
+
+	let addProductVisable = $state<boolean>(false);
+
+	function toggleAddProduct() {
+		addProductVisable = !addProductVisable;
+	}
+
+	let activeSharingFridgeId = $state<string | null>(null);
+
+	function toggleShareForm(fridgeId: string) {
+		activeSharingFridgeId = activeSharingFridgeId === fridgeId ? null : fridgeId;
+	}
 </script>
 
-<h1>Products in {fridge.name}</h1>
+<div class="flex items-center justify-between p-4">
+	<h1 class="text-3xl">Kjøleskap {fridge.name}</h1>
+	<div class="flex flex-col gap-4">
+		<Button text="Del" onClick={() => toggleShareForm(fridge.id)} />
+		<Button text="Legg til vare" onClick={toggleAddProduct} />
+	</div>
+</div>
 
-<h1>Register Product</h1>
+{#if addProductVisable}
+	<Modal showModal={() => toggleAddProduct()}>
+		<AddProductForm fridgeId={fridge.id} />
+	</Modal>
+{/if}
 
-<form class="mx-auto flex max-w-md flex-col gap-4" method="post" use:enhance>
-	<label class="flex flex-col">
-		Name
-		<input name="name" class="rounded border p-1" required />
-	</label>
+{#if activeSharingFridgeId === fridge.id}
+	<Modal showModal={() => toggleShareForm(fridge.id)}>
+		<ShareFridgeForm fridgeId={fridge.id} />
+	</Modal>
+{/if}
 
-	<label class="flex flex-col">
-		Expiry Date
-		<input type="date" name="expiry_date" class="rounded border p-1" required />
-	</label>
+{#if products === undefined || products.length === 0}
+	<p class="flex h-full w-full justify-center p-4">
+		Du har ingen produkter i dette kjøleskapet ennå. Legg til ditt første!
+	</p>
+{/if}
 
-	<label class="flex flex-col">
-		Quantity
-		<input type="number" name="quantity" class="rounded border p-1" required />
-	</label>
-
-	<button class="rounded bg-blue-500 p-1">Register Product</button>
-</form>
-
-<hr />
-
-<ul>
+<div class="grid grid-cols-3 gap-4 p-4">
 	{#each products as product}
-		<li>
-			<strong>{product.name}</strong> - {product.quantity} units, expires on {product.expiresAt}
-		</li>
+		<ProductCard {product} />
 	{/each}
-</ul>
+</div>

@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import toast from 'svelte-french-toast';
 	import type { ActionResult } from '@sveltejs/kit';
+	import Button from '$lib/components/Button.svelte';
 
 	type Props = {
 		fridgeId: string;
@@ -27,36 +28,20 @@
 	}
 </script>
 
-<div class="share-fridge-form">
-	<form method="POST" action="?/shareFridge" use:enhance={handleSubmit}>
+<div class="w-full">
+	<form method="POST" action="?/shareFridge" use:enhance={handleSubmit} class="flex flex-col gap-4">
 		<input type="hidden" name="fridge_id" value={fridgeId} />
-		<div>
-			<label for="email">User Email</label>
-			<input
-				type="email"
-				id="email"
-				name="email"
-				placeholder="Enter email address"
-				required
-				class="mb-3 w-full rounded border p-2"
-			/>
-		</div>
-		<button class="share-button" type="submit">Share Fridge</button>
+
+		<label for="email" class="block font-bold">Bruker e-post</label>
+		<p class="text-gray-500">Skriv inn e-post til bruker du vil dele med.</p>
+		<input
+			type="email"
+			id="email"
+			name="email"
+			placeholder="E-post"
+			required
+			class="w-full rounded border p-2"
+		/>
+		<Button text="Del kjøleskap" onClick={null} />
 	</form>
 </div>
-
-<style>
-	.share-button {
-		background-color: #4caf50;
-		color: white;
-		padding: 5px 10px;
-		border-radius: 4px;
-		font-size: 0.9em;
-		border: none;
-		cursor: pointer;
-	}
-
-	.share-button:hover {
-		background-color: #45a049;
-	}
-</style>
