@@ -7,7 +7,7 @@ export const givenProduct = async (fridgeId?: string, product?: Partial<ProductI
 	const productInsert = {
 		id: product?.id ?? nanoid(),
 		name: product?.name ?? 'Test Product',
-		expiryDate: product?.expiryDate ?? new Date(Date.now()),
+		expiryDate: product?.expiryDate ?? new Date(Date.now() + 10000),
 		quantity: product?.quantity ?? 1,
 		fridgeId: fridgeId ?? 'Test-id'
 	};

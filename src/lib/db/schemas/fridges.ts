@@ -1,4 +1,4 @@
-import { relations, type InferSelectModel, type InferInsertModel } from 'drizzle-orm';
+import { relations, type InferSelectModel } from 'drizzle-orm';
 import { sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import { users } from './users';

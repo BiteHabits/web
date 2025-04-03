@@ -1,5 +1,4 @@
 import { db } from '$lib/db/drizzle';
-import { isPast } from 'date-fns';
 import { eq } from 'drizzle-orm';
 import { products } from '$lib/db/schemas';
 import { nanoid } from 'nanoid';
@@ -9,7 +8,7 @@ export const getProductById = async (productId: string) => {
 	const product = await db.query.products.findFirst({
 		where: (row, { eq }) => eq(row.id, productId),
 		with: {
-			fridgeId: true
+			fridge: true
 		}
 	});
 
@@ -17,50 +16,18 @@ export const getProductById = async (productId: string) => {
 		return null;
 	}
 
-	if (product.expiryDate && isPast(product.expiryDate)) {
-		await db.delete(products).where(eq(products.id, productId));
-		return null;
-	}
-
-	if (product.quantity <= 0) {
-		return null;
-	}
-
-	const { fridgeId, ...productWithoutFridgeId } = product;
-
-	return {
-		fridgeId,
-		product: productWithoutFridgeId
-	};
+	return product;
 };
 
 export const getProductsFromFridge = async (fridgeId: string) => {
 	const productsFromFridge = await db.query.products.findMany({
 		where: (row, { eq }) => eq(row.fridgeId, fridgeId),
 		with: {
-			fridgeId: true
+			fridge: true
 		}
 	});
 
-	const filteredProducts = productsFromFridge
-		.filter((product) => {
-			if (product.expiryDate && isPast(product.expiryDate)) {
-				db.delete(products).where(eq(products.id, product.id));
-				return false;
-			}
-
-			if (product.quantity <= 0) {
-				return false;
-			}
-
-			return true;
-		})
-		.map(({ fridgeId, ...product }) => ({
-			fridgeId,
-			product
-		}));
-
-	return filteredProducts;
+	return productsFromFridge;
 };
 
 export const deleteProduct = async (productId: string) => {

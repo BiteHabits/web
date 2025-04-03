@@ -21,8 +21,8 @@ describe('ProductService', () => {
 		const product = await getProductById('Product-1');
 
 		expect(product).not.toBe(null);
-		expect(product?.product.id).toBe('Product-1');
-		expect(product?.product.name).toBe('TestProduct');
+		expect(product?.id).toBe('Product-1');
+		expect(product?.name).toBe('TestProduct');
 		expect(product?.fridgeId).toBe(fridge.id);
 	});
 
@@ -35,8 +35,8 @@ describe('ProductService', () => {
 		const product = await getProductsFromFridge(fridge.id);
 
 		expect(product).not.toBe(null);
-		expect(product[0].product.id).toBe('Product-1');
-		expect(product[0].product.name).toBe('TestProduct');
+		expect(product[0].id).toBe('Product-1');
+		expect(product[0].name).toBe('TestProduct');
 		expect(product[0].fridgeId).toBe(fridge.id);
 	});
 
@@ -59,7 +59,7 @@ describe('ProductService', () => {
 		const foundProduct = await getProductById(createdProduct?.id ?? 'Feil');
 
 		expect(foundProduct).not.toBeNull();
-		expect(foundProduct?.product.name).toBe('TestProduct');
+		expect(foundProduct?.name).toBe('TestProduct');
 		expect(foundProduct?.fridgeId).toBe(fridge.id);
 	});
 
@@ -82,7 +82,7 @@ describe('ProductService', () => {
 		const foundProduct = await getProductById('Product-1');
 
 		expect(foundProduct).not.toBeNull();
-		expect(foundProduct?.product.name).toBe('new-name');
+		expect(foundProduct?.name).toBe('new-name');
 		expect(foundProduct?.fridgeId).toBe(fridge.id);
 	});
 
@@ -96,6 +96,7 @@ describe('ProductService', () => {
 
 		expect(deletedProduct).not.toBeNull();
 
-		await expect(getProductById('Product-1')).rejects.toThrow();
+		const foundProduct = await getProductById(product.id);
+		expect(foundProduct).toBeNull();
 	});
 });
