@@ -71,7 +71,6 @@ describe('ProductService', () => {
 
 		const updatedProduct = await updateProduct('Product-1', {
 			name: 'new-name',
-			id: '0',
 			expiryDate: new Date(Date.now()),
 			quantity: 1,
 			fridgeId: fridge.id
