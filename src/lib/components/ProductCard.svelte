@@ -13,8 +13,7 @@
 	let { product }: Props = $props();
 
 	let expired = $derived.by(() => {
-		const expiry = new Date(product.expiryDate);
-		const diffInMs = expiry.getTime() - new Date().getTime();
+		const diffInMs = product.expiryDate.getTime() - new Date().getTime();
 		const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
 		if (diffInDays <= 1) {
