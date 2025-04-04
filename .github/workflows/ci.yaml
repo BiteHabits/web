@@ -33,6 +33,9 @@ jobs:
       - name: 🧹 Lint
         run: pnpm lint
 
+      - name: ✅ Check
+        run: pnpm run check
+
       - name: ⚙️ Build
         run: pnpm build
 
