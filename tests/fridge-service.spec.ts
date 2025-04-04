@@ -93,7 +93,7 @@ describe('FridgeService', () => {
 
 		expect(deletedFridge).not.toBeNull();
 
-		expect(getFridgeById('Fridge-1', createdUser.id)).rejects.toThrow();
+		await expect(getFridgeById('Fridge-1', createdUser.id)).rejects.toThrow();
 	});
 
 	it('should throw an error when a non creator tries to delete a fridge', async () => {
