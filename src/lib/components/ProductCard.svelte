@@ -17,8 +17,7 @@
 		const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 		if (diffInDays < 0) {
 			return '';
-		}
-		else if (diffInDays <= 1) {
+		} else if (diffInDays <= 1) {
 			return 'text-red-500';
 		} else if (diffInDays <= 3) {
 			return 'text-yellow-500';
