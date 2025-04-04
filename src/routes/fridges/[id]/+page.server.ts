@@ -38,7 +38,8 @@ export const actions: Actions = {
 
 		const formData = await request.formData();
 		const name = formData.get('name') as string | null;
-		const expiryDate = formData.get('expiry_date') as Date | null;
+		const expiryDateString = formData.get('expiry_date') as string | null;
+		const expiryDate = expiryDateString ? new Date(expiryDateString) : null;
 		const quantity = formData.get('quantity') as string | null;
 
 		if (!name || !expiryDate || !quantity) {
