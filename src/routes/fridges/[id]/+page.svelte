@@ -31,13 +31,13 @@
 
 {#if addProductVisable}
 	<Modal showModal={() => toggleAddProduct()}>
-		<AddProductForm fridgeId={fridge.id} />
+		<AddProductForm />
 	</Modal>
 {/if}
 
 {#if activeSharingFridgeId === fridge.id}
 	<Modal showModal={() => toggleShareForm(fridge.id)}>
-		<ShareFridgeForm fridgeId={fridge.id} />
+		<ShareFridgeForm />
 	</Modal>
 {/if}
 

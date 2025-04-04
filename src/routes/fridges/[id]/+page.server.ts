@@ -67,7 +67,7 @@ export const actions: Actions = {
 			success: true
 		};
 	},
-	shareFridge: async ({ request, locals }) => {
+	shareFridge: async ({ request, locals, params }) => {
 		const userId = locals.auth?.user.id;
 		if (!userId) {
 			return fail(401, {
@@ -77,7 +77,7 @@ export const actions: Actions = {
 		}
 
 		const formData = await request.formData();
-		const fridgeId = formData.get('fridge_id') as string;
+		const fridgeId = params.id;
 		const email = formData.get('email') as string;
 
 		if (!fridgeId || !email) {

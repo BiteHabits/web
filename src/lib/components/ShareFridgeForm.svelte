@@ -4,12 +4,6 @@
 	import type { ActionResult } from '@sveltejs/kit';
 	import Button from '$lib/components/Button.svelte';
 
-	type Props = {
-		fridgeId: string;
-	};
-
-	let { fridgeId }: Props = $props();
-
 	function handleSubmit() {
 		return async ({ result }: { result: ActionResult }) => {
 			if (result.type === 'success') {
@@ -30,8 +24,6 @@
 
 <div class="w-full">
 	<form method="POST" action="?/shareFridge" use:enhance={handleSubmit} class="flex flex-col gap-4">
-		<input type="hidden" name="fridge_id" value={fridgeId} />
-
 		<label for="email" class="block font-bold">Bruker e-post</label>
 		<p class="text-gray-500">Skriv inn e-post til bruker du vil dele med.</p>
 		<input
