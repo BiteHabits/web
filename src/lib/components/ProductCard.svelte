@@ -2,18 +2,18 @@
 	import translateDate from '$lib/utils/translateDate';
 	type Props = {
 		product: {
-			fridgeId: string;
-			id: string;
 			name: string;
-			expiresAt: string;
+			id: string;
+			expiryDate: Date;
 			quantity: number;
+			fridgeId: string;
 		};
 	};
 
 	let { product }: Props = $props();
 
 	let expired = $derived.by(() => {
-		const diffInMs = new Date(product.expiresAt).getTime() - new Date().getTime();
+		const diffInMs = product.expiryDate.getTime() - new Date().getTime();
 		const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
 		if (diffInDays <= 1) {
@@ -31,7 +31,7 @@
 		<h3 class="text-lg font-bold">{product.name}</h3>
 		<p>{product.quantity} stykk</p>
 		{#if expired !== ''}
-			<p class={expired}>Best før: {translateDate(product.expiresAt)}</p>
+			<p class={expired}>Best før: {translateDate(product.expiryDate.toISOString())}</p>
 		{:else}
 			<p class="text-red-500">Utløpt</p>
 		{/if}
