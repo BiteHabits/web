@@ -38,7 +38,7 @@ export const actions: Actions = {
 
 		const formData = await request.formData();
 		const name = formData.get('name') as string | null;
-		const expiryDate = formData.get('expiry_date') as string | null;
+		const expiryDate = formData.get('expiry_date') as Date | null;
 		const quantity = formData.get('quantity') as string | null;
 
 		if (!name || !expiryDate || !quantity) {
@@ -58,7 +58,7 @@ export const actions: Actions = {
 
 		await db.insert(products).values({
 			name,
-			expiresAt: expiryDate,
+			expiryDate: expiryDate,
 			quantity: quantityNumber,
 			fridgeId: params.id
 		});

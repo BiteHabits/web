@@ -31,7 +31,7 @@
 
 {#if addProductVisable}
 	<Modal showModal={() => toggleAddProduct()}>
-		<AddProductForm fridgeId={fridge.id} />
+		<AddProductForm />
 	</Modal>
 {/if}
 
