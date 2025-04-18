@@ -1,0 +1,46 @@
+name: Build & Deploy Docker
+
+on:
+  push:
+    branches: [main]
+
+env:
+  DATABASE_URL: file:./db.db
+  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_TAG: latest
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔍 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 🐢 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: ./pnpm-lock.yaml
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: ⚙️ Build
+        run: pnpm build
+
+      - name: 🐳 Build Docker Image
+        run: |
+          docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+      - name: 🔐 Authenticate Docker
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: 🚀 Push Docker Image
+        run: |
+          docker push $IMAGE_NAME:$IMAGE_TAG
