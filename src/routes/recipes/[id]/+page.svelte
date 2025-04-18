@@ -2,7 +2,7 @@
 	type Props = {
 		data: {
 			recipe: {
-				id: string;
+				id: number;
 				name: string;
 				image: string;
 				ingredients: { name: string }[];
@@ -21,7 +21,7 @@
 	>
 		<h2 class="border-b-4 border-yellow-200 px-4 py-3 text-lg font-semibold">Ingredienser</h2>
 		<ul class="divide-y divide-gray-300">
-			{#each recipe.ingredients as ingredient, i}
+			{#each recipe.ingredients as ingredient, i (i)}
 				<li class="flex items-center gap-2 px-4 py-2">
 					<input type="checkbox" id="ingredient-{i}" class="form-checkbox accent-green-500" />
 					<label for="ingredient-{i}" class="cursor-pointer">{ingredient.name}</label>
@@ -38,7 +38,7 @@
 		<section class="flex flex-col items-center gap-4">
 			<h2 class="text-lg font-semibold">Slik gjør du det:</h2>
 			<ol class="list-inside list-decimal space-y-2 px-4 text-left">
-				{#each recipe.steps as step}
+				{#each recipe.steps as step (step)}
 					<li>{step}</li>
 				{/each}
 			</ol>

@@ -55,7 +55,7 @@
 
 	{#if $user}
 		<menu class="absolute left-1/2 flex -translate-x-1/2 flex-row items-center gap-5">
-			{#each middleRoutes as route}
+			{#each middleRoutes as route (route.label)}
 				{@const isActive = pathname === route.href}
 				<li>
 					<a

@@ -48,7 +48,7 @@
 {/if}
 
 <div class="grid grid-cols-3 gap-4 p-4">
-	{#each products as product}
+	{#each products as product (product.id)}
 		<ProductCard {product} />
 	{/each}
 </div>

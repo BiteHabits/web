@@ -6,7 +6,7 @@ on:
 
 env:
   DATABASE_URL: file:./db.db
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_NAME: ghcr.io/bitehabits
   IMAGE_TAG: latest
 
 jobs:

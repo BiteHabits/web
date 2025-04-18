@@ -17,7 +17,7 @@
 		{:else}
 			<h2 class="mb-3 text-lg font-semibold">Dine kjøleskap:</h2>
 			<ul class="space-y-3">
-				{#each fridges as fridge}
+				{#each fridges as fridge (fridge.id)}
 					<li class="rounded bg-gray-100">
 						<a
 							class="block h-full w-full rounded p-4 hover:bg-slate-50"

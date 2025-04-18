@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import toast from 'svelte-french-toast';
+	import { toast } from 'svelte-sonner';
 	import type { ActionResult } from '@sveltejs/kit';
 	import Button from '$lib/components/Button.svelte';
 
