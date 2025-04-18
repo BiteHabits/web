@@ -23,6 +23,8 @@ resource "azurerm_linux_web_app" "app" {
   resource_group_name = azurerm_resource_group.rg.name
   service_plan_id     = azurerm_service_plan.plan.id
 
+  https_only = true
+
   site_config {
     application_stack {
       docker_image_name        = "${var.docker_owner}/${var.docker_image}:${var.docker_tag}"
