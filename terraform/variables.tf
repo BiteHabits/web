@@ -1,3 +1,8 @@
+variable "subscription_id" {
+  description = "The ID of the Azure subscription to use"
+  type        = string
+}
+
 variable "location" {
   default = "West Europe"
 }
@@ -14,14 +19,18 @@ variable "app_service_name" {
   default = "bitehabits"
 }
 
-variable "docker_registry" {
-    default = "bitehabits"
+variable "docker_owner" {
+  default = "bitehabits"
 }
 
 variable "docker_image" {
-    default = "web"
+  default = "web"
 }
 
 variable "docker_tag" {
-    default = "latest"
+  default = "latest"
+}
+
+variable "database_url" {
+  default = "file:./prod.db"
 }
