@@ -1,7 +1,9 @@
 import { defineConfig } from 'drizzle-kit';
-if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
 
-export default defineConfig({
+const DATABASE_URL = process.env.DATABASE_URL;
+if (!DATABASE_URL) throw new Error('DATABASE_URL is not set');
+
+const turso = defineConfig({
 	schema: './src/lib/db/schemas/index.ts',
 	casing: 'snake_case',
 	dialect: 'turso',
@@ -9,7 +11,23 @@ export default defineConfig({
 	strict: true,
 
 	dbCredentials: {
-		url: process.env.DATABASE_URL,
+		url: DATABASE_URL,
 		authToken: process.env.DATABASE_AUTH_TOKEN || undefined
 	}
 });
+
+const sqlite = defineConfig({
+	schema: './src/lib/db/schemas/index.ts',
+	casing: 'snake_case',
+	dialect: 'sqlite',
+	verbose: true,
+	strict: true,
+
+	dbCredentials: {
+		url: DATABASE_URL
+	}
+});
+
+const isDEV = DATABASE_URL.startsWith('file:');
+
+export default isDEV ? sqlite : turso;
