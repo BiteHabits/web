@@ -3,6 +3,16 @@ variable "subscription_id" {
   type        = string
 }
 
+variable "database_url" {
+  description = "The URL of the database to connect to"
+  type        = string
+}
+
+variable "database_auth_token" {
+  description = "The authentication token for the database"
+  type        = string
+}
+
 variable "location" {
   default = "West Europe"
 }
@@ -29,14 +39,4 @@ variable "docker_image" {
 
 variable "docker_tag" {
   default = "latest"
-}
-
-variable "database_url" {
-  description = "The URL of the database to connect to"
-  type        = string
-}
-
-variable "database_auth_token" {
-  description = "The authentication token for the database"
-  type        = string
 }
