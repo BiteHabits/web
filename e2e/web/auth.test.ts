@@ -10,8 +10,9 @@ test('user can register an account', async ({ page }) => {
 	await page.fill('input[name="email"]', 'hello@world.com');
 	await page.fill('input[name="name"]', 'Hello World');
 	await page.fill('input[name="password"]', 'password');
+	await page.fill('input[name="repeatPassword"]', 'password');
 
-	await page.getByRole('button', { name: 'Registrer deg' }).click();
+	await page.getByRole('button', { name: 'Registrer' }).click();
 
 	const header = page.locator('header');
 

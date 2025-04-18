@@ -39,6 +39,7 @@
 			<span class="mb-1 ml-2 font-medium">Gjenta passord</span>
 			<input
 				type="password"
+				name="repeatPassword"
 				bind:value={repeatPassword}
 				class="h-10 rounded-xl border-2 px-2 py-1"
 			/>
