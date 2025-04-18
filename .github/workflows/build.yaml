@@ -4,9 +4,13 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  packages: write
+
 env:
-  DATABASE_URL: file:./db.db
-  IMAGE_NAME: ghcr.io/bitehabits
+  DATABASE_URL: file:./prod.db
+  IMAGE_NAME: ghcr.io/bitehabits/web
   IMAGE_TAG: latest
 
 jobs:
