@@ -7,6 +7,7 @@ on:
 permissions:
   contents: read
   packages: write
+  id-token: write
 
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -31,6 +32,16 @@ jobs:
           node-version: 20
           cache: pnpm
           cache-dependency-path: ./pnpm-lock.yaml
+
+      - name: 🏗️ Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: 🔑 Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -57,3 +68,12 @@ jobs:
       - name: 🚀 Push Docker Image
         run: |
           docker push $IMAGE_NAME:$IMAGE_TAG
+
+      - name: 👷 Apply Terraform
+        id: apply
+        run: |
+          terraform init
+          terraform apply -auto-approve \
+            -var "database_url=${{ secrets.DATABASE_URL }}" \
+            -var "database_auth_token=${{ secrets.DATABASE_AUTH_TOKEN }}" \
+            -var "subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
