@@ -2,44 +2,61 @@
 	import Logo from '$lib/assets/bite-habits-logo-trans.png';
 	import UserIcon from '$lib/assets/user-icon.svg';
 	import { getUser } from '$lib/context/user-context';
+	import { page } from '$app/state';
+
+	let pathname = $derived(page.url.pathname);
+
+	const middleRoutes = [
+		{
+			label: 'Oppskrifter',
+			href: '/recipes'
+		},
+		{
+			label: 'Kjøleskap',
+			href: '/fridges'
+		}
+	];
 
 	let user = getUser();
 </script>
 
-<header class="mb-10 flex h-32 items-end justify-between bg-green-300 p-4">
-	<div class="flex flex-col items-center gap-1">
-		<a href="/"><img src={Logo} class="h-16 w-16" alt="BiteHabits logo" /></a>
-		<h1 class="font-bold">BiteHabits</h1>
+<header class="relative mx-auto mb-10 flex w-full max-w-4xl items-center justify-between p-6">
+	<div>
+		<a href="/"><img src={Logo} class="size-14" alt="BiteHabits logo" /></a>
 	</div>
 
-	<menu class="flex flex-row items-center gap-12">
-		{#if $user}
-			<li class="rounded-lg border-2 border-gray-700 p-4 hover:bg-green-500">
-				<a class="p-4 text-gray-700 hover:text-gray-900" href="/recipes">Oppskrifter</a>
-			</li>
-			<li class="rounded-lg border-2 border-gray-700 p-4 hover:bg-green-500">
-				<a class="p-4 text-gray-700 hover:text-gray-900" href="/fridges">Kjøleskap</a>
-			</li>
-		{/if}
-	</menu>
 	{#if $user}
-		<menu class="flex flex-col items-center">
+		<menu class="absolute left-1/2 flex -translate-x-1/2 flex-row items-center gap-5">
+			{#each middleRoutes as route}
+				{@const isActive = pathname === route.href}
+				<li>
+					<a
+						class={`${isActive ? 'text-gray-900 underline' : 'text-gray-600'} transition-colors hover:text-gray-900`}
+						href={route.href}>{route.label}</a
+					>
+				</li>
+			{/each}
+		</menu>
+	{/if}
+
+	<menu class="flex items-center gap-4 text-lg font-medium">
+		{#if $user}
 			<li>
 				<img src={UserIcon} alt="user icon" />
 			</li>
 			<li>
-				<button class="text-gray-700 hover:text-gray-900">Logg ut</button>
+				<button class="text-gray-600 transition-colors hover:text-gray-900">Logg ut</button>
 			</li>
-		</menu>
-	{/if}
-	{#if !$user}
-		<menu>
+		{/if}
+		{#if !$user}
 			<li>
-				<a class="text-gray-700 hover:text-gray-900" href="/logg-inn">Logg inn</a>
+				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/logg-inn">Logg inn</a>
 			</li>
 			<li>
-				<a class="text-gray-700 hover:text-gray-900" href="/registrer">Registrer</a>
+				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/registrer"
+					>Registrer</a
+				>
 			</li>
-		</menu>
-	{/if}
+		{/if}
+	</menu>
 </header>

@@ -6,6 +6,7 @@ import { passwords } from '$lib/db/schemas/passwords.js';
 import { users } from '$lib/db/schemas/users.js';
 import { nanoid } from 'nanoid';
 import { addDays } from 'date-fns';
+import { redirect } from '@sveltejs/kit';
 
 export const actions = {
 	default: async ({ request, cookies }) => {
@@ -44,8 +45,6 @@ export const actions = {
 			expires: expiresAt
 		});
 
-		return {
-			success: true
-		};
+		redirect(302, '/fridges');
 	}
 };

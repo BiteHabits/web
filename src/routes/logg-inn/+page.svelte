@@ -2,18 +2,27 @@
 	import { enhance } from '$app/forms';
 </script>
 
-<h1>Logg inn</h1>
+<div class="mx-auto max-w-md">
+	<h1 class="mb-8 text-4xl font-light">Logg inn</h1>
 
-<form class="mx-auto flex max-w-md flex-col gap-4" method="post" use:enhance>
-	<label class="flex flex-col">
-		E-post
-		<input name="email" class="rounded border p-1" />
-	</label>
+	<form class="mx-auto flex flex-col gap-4" method="post" use:enhance>
+		<label class="flex flex-col">
+			<span class="mb-1 ml-2 font-medium">E-post</span>
+			<input
+				name="email"
+				class="h-10 rounded-xl border-2 px-2 py-1"
+				placeholder="kari.nordmann@norge.no"
+			/>
+		</label>
 
-	<label class="flex flex-col">
-		Passord
-		<input type="password" name="password" class="rounded border p-1" />
-	</label>
+		<label class="flex flex-col">
+			<span class="mb-1 ml-2 font-medium">Passord</span>
+			<input type="password" name="password" class="h-10 rounded-xl border-2 px-2 py-1" />
+		</label>
 
-	<button class="rounded bg-blue-500 p-1">Logg inn</button>
-</form>
+		<button
+			class="rounded-xl border-2 border-blue-800 bg-blue-600 p-1 font-medium text-white transition-colors hover:bg-blue-700"
+			>Logg inn</button
+		>
+	</form>
+</div>

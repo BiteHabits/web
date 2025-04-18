@@ -15,6 +15,12 @@
 </script>
 
 <Toaster position="top-center" />
-<Header />
+<div class="flex min-h-screen w-full flex-col">
+	<Header />
 
-{@render children()}
+	<div class="w-full flex-1">
+		{@render children()}
+	</div>
+
+	<footer class="mt-32 h-52 rounded-t-3xl border-2 border-blue-800 bg-blue-500"></footer>
+</div>
