@@ -69,11 +69,6 @@ jobs:
         run: |
           docker push $IMAGE_NAME:$IMAGE_TAG
 
-      - name: 👷 Apply Terraform
-        id: apply
+      - name: 👷 Redeploy
         run: |
-          terraform init
-          terraform apply -auto-approve \
-            -var "database_url=${{ secrets.DATABASE_URL }}" \
-            -var "database_auth_token=${{ secrets.DATABASE_AUTH_TOKEN }}" \
-            -var "subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+          az webapp restart --name bitehabits --resource-group bitehabits-rg
