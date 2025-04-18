@@ -32,6 +32,7 @@ resource "azurerm_linux_web_app" "app" {
 
   app_settings = {
     DATABASE_URL = var.database_url
+    DATABASE_AUTH_TOKEN = var.database_auth_token
   }
 }
 

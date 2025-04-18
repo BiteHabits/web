@@ -32,5 +32,11 @@ variable "docker_tag" {
 }
 
 variable "database_url" {
-  default = "file:./prod.db"
+  description = "The URL of the database to connect to"
+  type        = string
+}
+
+variable "database_auth_token" {
+  description = "The authentication token for the database"
+  type        = string
 }

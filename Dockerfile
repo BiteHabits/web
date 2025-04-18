@@ -1,7 +1,6 @@
-FROM node:22-alpine AS builder
+# syntax=docker/dockerfile:1.4
 
-ARG DATABASE_URL=file:./prod.db
-ENV DATABASE_URL=${DATABASE_URL}
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
@@ -9,8 +8,11 @@ RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN pnpm run build
-RUN pnpm run db:migrate
+RUN --mount=type=secret,id=database_url \
+    --mount=type=secret,id=database_auth_token \
+    export DATABASE_URL="$(cat /run/secrets/database_url)" && \
+    export DATABASE_AUTH_TOKEN="$(cat /run/secrets/database_auth_token)" && \
+    pnpm run build
 
 FROM node:22-alpine
 
@@ -18,7 +20,6 @@ WORKDIR /app
 COPY --from=builder /app/package.json /app/package.json
 COPY --from=builder /app/build /app/build
 COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/prod.db /app/prod.db
 
 EXPOSE 3000
 CMD ["node", "build/index.js"]

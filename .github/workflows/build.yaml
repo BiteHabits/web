@@ -9,7 +9,8 @@ permissions:
   packages: write
 
 env:
-  DATABASE_URL: file:./prod.db
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
   IMAGE_NAME: ghcr.io/bitehabits/web
   IMAGE_TAG: latest
 
@@ -37,9 +38,17 @@ jobs:
       - name: ⚙️ Build
         run: pnpm build
 
+      - name: 🏗️ Migrate database
+        run: pnpm db:migrate
+
       - name: 🐳 Build Docker Image
         run: |
-          docker build -t $IMAGE_NAME:$IMAGE_TAG .
+          export DOCKER_BUILDKIT=1
+
+          docker build \
+            --secret id=database_url,env=DATABASE_URL \
+            --secret id=database_auth_token,env=DATABASE_AUTH_TOKEN \
+            -t $IMAGE_NAME:$IMAGE_TAG .
 
       - name: 🔐 Authenticate Docker
         run: |
