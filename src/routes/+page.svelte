@@ -4,7 +4,6 @@
 		Carrot,
 		Cpu,
 		Heart,
-		List,
 		ListCheck,
 		MemoryStick,
 		Microchip,
@@ -15,17 +14,19 @@
 
 <div class="relative flex flex-col pb-32 pt-14 text-center">
 	<h1 class="mb-5 text-6xl font-bold text-gray-800">BiteHabits</h1>
-	<p>
-		<span class="text-2xl font-medium text-gray-600">Moderniser kjøpeskapet ditt</span>
-		<span class="text-2xl font-medium text-green-500 underline">idag</span>.
-	</p>
-	<p>
-		<span class="text-2xl font-medium text-gray-600">Lev et</span>
-		<span class="text-2xl font-medium text-green-500 underline">sunnere</span>
-		<span class="text-2xl font-medium text-gray-600">og</span>
-		<span class="text-2xl font-medium text-green-500 underline">bedre</span>
-		<span class="text-2xl font-medium text-gray-600">liv.</span>
-	</p>
+	<div class="-space-y-1">
+		<p>
+			<span class="text-2xl font-medium text-gray-600">Moderniser kjøpeskapet ditt</span>
+			<span class="text-2xl font-medium text-green-500 underline">idag</span>.
+		</p>
+		<p>
+			<span class="text-2xl font-medium text-gray-600">Lev et</span>
+			<span class="text-2xl font-medium text-green-500 underline">sunnere</span>
+			<span class="text-2xl font-medium text-gray-600">og</span>
+			<span class="text-2xl font-medium text-green-500 underline">bedre</span>
+			<span class="text-2xl font-medium text-gray-600">liv.</span>
+		</p>
+	</div>
 </div>
 
 <div class="mx-auto mt-4 grid max-w-3xl grid-cols-2 gap-4 px-6">

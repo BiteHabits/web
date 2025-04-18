@@ -17,12 +17,40 @@
 		}
 	];
 
+	let deg = $state(0);
+	let shouldRotate = $state(false);
+
+	const handleLogoFocus = async () => {
+		shouldRotate = true;
+
+		while (shouldRotate) {
+			deg += 1;
+			if (deg >= 360) deg = 0;
+			await new Promise((resolve) => setTimeout(resolve, 10));
+		}
+	};
+
+	const stopRotation = () => {
+		shouldRotate = false;
+	};
+
 	let user = getUser();
 </script>
 
 <header class="relative mx-auto mb-10 flex w-full max-w-4xl items-center justify-between p-6">
 	<div>
-		<a href="/"><img src={Logo} class="size-14" alt="BiteHabits logo" /></a>
+		<a href="/"
+			><img
+				src={Logo}
+				class="size-14"
+				style={`transform: rotate(${deg}deg);`}
+				alt="BiteHabits logo"
+				onmouseover={handleLogoFocus}
+				onfocus={handleLogoFocus}
+				onmouseleave={stopRotation}
+				onblur={stopRotation}
+			/></a
+		>
 	</div>
 
 	{#if $user}
