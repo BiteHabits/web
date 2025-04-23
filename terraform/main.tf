@@ -1,3 +1,14 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.26.0"
+    }
+  }
+
+  required_version = ">= 1.11.0"
+}
+
 provider "azurerm" {
   subscription_id = var.subscription_id
 
@@ -60,3 +71,8 @@ resource "azurerm_linux_web_app" "app" {
   }
 }
 
+resource "azurerm_app_service_custom_hostname_binding" "bitehabits_custom_domain" {
+  hostname            = "bitehabits.com"
+  app_service_name    = azurerm_linux_web_app.app.name
+  resource_group_name = azurerm_linux_web_app.app.resource_group_name
+}

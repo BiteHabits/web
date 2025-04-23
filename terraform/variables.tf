@@ -11,6 +11,7 @@ variable "database_url" {
 variable "database_auth_token" {
   description = "The authentication token for the database"
   type        = string
+  sensitive   = true
 }
 
 variable "location" {
