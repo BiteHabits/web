@@ -4,6 +4,7 @@ import { db } from '$lib/db/drizzle.js';
 import { sessions } from '$lib/db/schemas/sessions.js';
 import { nanoid } from 'nanoid';
 import { addDays } from 'date-fns';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
 	default: async ({ request, cookies }) => {
@@ -20,10 +21,10 @@ export const actions = {
 		});
 
 		if (!user || !user.password || !verify(password, user.password.hash)) {
-			return {
+			return fail(400, {
 				success: false,
 				message: 'E-post eller passord er feil'
-			};
+			});
 		}
 
 		const sessionId = nanoid();
@@ -40,8 +41,6 @@ export const actions = {
 			expires: expiresAt
 		});
 
-		return {
-			success: true
-		};
+		redirect(302, "/fridges")
 	}
 };

@@ -3,6 +3,7 @@
 	import UserIcon from '$lib/assets/user-icon.svg';
 	import { getUser } from '$lib/context/user-context';
 	import { page } from '$app/state';
+	import { enhance } from '$app/forms';
 
 	let pathname = $derived(page.url.pathname);
 
@@ -73,12 +74,14 @@
 				<img src={UserIcon} alt="user icon" />
 			</li>
 			<li>
-				<button class="text-gray-600 transition-colors hover:text-gray-900">Logg ut</button>
+				<form action="/log-out" method="post" use:enhance>
+					<button class="text-gray-600 transition-colors hover:text-gray-900">Logg ut</button>
+				</form>
 			</li>
 		{/if}
 		{#if !$user}
 			<li>
-				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/logg-inn">Logg inn</a>
+				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/log-in">Logg inn</a>
 			</li>
 			<li>
 				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/registrer"
