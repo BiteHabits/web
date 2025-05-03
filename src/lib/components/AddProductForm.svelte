@@ -23,9 +23,14 @@
 	};
 </script>
 
-<h1 class="font-bold">Register Product</h1>
+<h1 class="mb-4 text-2xl">Registrer produkt</h1>
 
-<form class="flex w-full flex-col gap-4" method="post" action="?/addProduct" use:enhance>
+<form
+	class="flex max-h-screen w-full flex-col gap-4 overflow-x-auto"
+	method="post"
+	action="?/addProduct"
+	use:enhance
+>
 	<Scanner onCodeScanned={handleCode} />
 
 	<div class="flex items-center gap-4">
