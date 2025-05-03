@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Logo from '$lib/assets/bite-habits-logo-trans.png';
-	import UserIcon from '$lib/assets/user-icon.svg';
+	import { User } from '@lucide/svelte';
 	import { getUser } from '$lib/context/user-context';
 	import { page } from '$app/state';
 	import { enhance } from '$app/forms';
@@ -71,7 +71,9 @@
 	<menu class="flex items-center gap-4 text-lg font-medium">
 		{#if $user}
 			<li>
-				<img src={UserIcon} alt="user icon" />
+				<a href="/profil">
+					<User class="size-6 text-gray-600" />
+				</a>
 			</li>
 			<li>
 				<form action="/logg-ut" method="post" use:enhance>

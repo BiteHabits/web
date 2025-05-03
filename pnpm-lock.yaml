@@ -2897,7 +2897,7 @@ snapshots:
 
   '@types/better-sqlite3@7.6.12':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 20.17.30
     optional: true
 
   '@types/cookie@0.6.0': {}
