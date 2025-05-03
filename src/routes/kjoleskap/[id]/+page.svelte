@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ProductCard from '$lib/components/ProductCard.svelte';
 	import AddProductForm from '$lib/components/AddProductForm.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import ShareFridgeForm from '$lib/components/ShareFridgeForm.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 
@@ -24,8 +24,8 @@
 <div class="flex items-center justify-between p-4">
 	<h1 class="text-3xl">Kjøleskap {fridge.name}</h1>
 	<div class="flex flex-col gap-4">
-		<Button text="Del" onClick={() => toggleShareForm(fridge.id)} />
-		<Button text="Legg til vare" onClick={toggleAddProduct} />
+		<Button onclick={() => toggleShareForm(fridge.id)}>Del</Button>
+		<Button onclick={toggleAddProduct}>Legg til vare</Button>
 	</div>
 </div>
 

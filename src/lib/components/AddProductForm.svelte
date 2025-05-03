@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Button from './Button.svelte';
+	import Button from './ui/Button.svelte';
 </script>
 
 <h1 class="font-bold">Register Product</h1>
@@ -21,5 +21,5 @@
 		<input type="number" name="quantity" class="rounded border p-1" required />
 	</label>
 
-	<Button text="Legg til vare" onClick={null} />
+	<Button>Legg til vare</Button>
 </form>

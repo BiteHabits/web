@@ -5,6 +5,13 @@ import { sessions } from '$lib/db/schemas/sessions.js';
 import { nanoid } from 'nanoid';
 import { addDays } from 'date-fns';
 import { fail, redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types.js';
+
+export const load: PageServerLoad = ({ locals }) => {
+	if (locals.auth) {
+		throw redirect(302, '/profil');
+	}
+};
 
 export const actions = {
 	default: async ({ request, cookies }) => {

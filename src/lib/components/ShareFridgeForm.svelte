@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { toast } from 'svelte-sonner';
 	import type { ActionResult } from '@sveltejs/kit';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 
 	function handleSubmit() {
 		return async ({ result }: { result: ActionResult }) => {
@@ -34,6 +34,7 @@
 			required
 			class="w-full rounded border p-2"
 		/>
-		<Button text="Del kjøleskap" onClick={null} />
+
+		<Button>Del kjøleskap</Button>
 	</form>
 </div>

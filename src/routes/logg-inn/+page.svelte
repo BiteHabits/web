@@ -1,5 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Input from '$lib/components/ui/Input.svelte';
 </script>
 
 <div class="mx-auto max-w-md">
@@ -8,27 +10,15 @@
 	<form class="mx-auto flex flex-col gap-4" method="post" use:enhance>
 		<label class="flex flex-col">
 			<span class="mb-1 ml-2 font-medium">E-post</span>
-			<input
-				name="email"
-				class="h-10 rounded-xl border-2 px-2 py-1"
-				placeholder="kari.nordmann@norge.no"
-			/>
+			<Input name="email" placeholder="kari.nordmann@norge.no" />
 		</label>
 
 		<label class="flex flex-col">
 			<span class="mb-1 ml-2 font-medium">Passord</span>
-			<input
-				type="password"
-				name="password"
-				class="h-10 rounded-xl border-2 px-2 py-1"
-				placeholder="Ditt passord"
-			/>
+			<Input type="password" name="password" placeholder="Ditt passord" />
 		</label>
 
-		<button
-			class="h-10 rounded-xl border-2 border-blue-800 bg-blue-600 p-1 font-medium text-white transition-colors hover:bg-blue-700"
-			>Logg inn</button
-		>
+		<Button>Logg inn</Button>
 
 		<p class="text-center text-sm text-gray-500">
 			Hvis du ikke har en konto, kan du

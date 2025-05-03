@@ -1,5 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Input from '$lib/components/ui/Input.svelte';
 
 	let { form } = $props();
 
@@ -21,12 +23,12 @@
 	<form class="mx-auto flex flex-col gap-4" method="post" use:enhance>
 		<label class="flex flex-col">
 			<span class="mb-1 ml-2 font-medium">Navn</span>
-			<input name="name" class="h-10 rounded-xl border-2 px-2 py-1" placeholder="Kari Nordmann" />
+			<Input name="name" class="h-10 rounded-xl border-2 px-2 py-1" placeholder="Kari Nordmann" />
 		</label>
 
 		<label class="flex flex-col">
 			<span class="mb-1 ml-2 font-medium">E-post</span>
-			<input
+			<Input
 				name="email"
 				class="h-10 rounded-xl border-2 px-2 py-1"
 				placeholder="kari.nordmann@norge.no"
@@ -35,22 +37,15 @@
 
 		<label class="flex flex-col">
 			<span class="mb-1 ml-2 font-medium">Passord</span>
-			<input
-				type="password"
-				name="password"
-				bind:value={password}
-				class="h-10 rounded-xl border-2 px-2 py-1"
-				placeholder="Passord"
-			/>
+			<Input type="password" name="password" bind:value={password} placeholder="Passord" />
 		</label>
 
 		<label class="flex flex-col">
 			<span class="mb-1 ml-2 font-medium">Gjenta passord</span>
-			<input
+			<Input
 				type="password"
 				name="repeatPassword"
 				bind:value={repeatPassword}
-				class="h-10 rounded-xl border-2 px-2 py-1"
 				placeholder="Gjenta passord"
 			/>
 		</label>
@@ -59,10 +54,7 @@
 			<p class="text-red-500">Passordene må være like</p>
 		{/if}
 
-		<button
-			class="h-10 rounded-xl border-2 border-blue-800 bg-blue-600 p-1 font-medium text-white transition-colors hover:bg-blue-700"
-			disabled={!isMatching || password === ''}>Registrer</button
-		>
+		<Button disabled={!isMatching || password === ''}>Registrer</Button>
 
 		<p class="text-center text-sm text-gray-500">
 			Hvis du allerede har en konto, kan du
