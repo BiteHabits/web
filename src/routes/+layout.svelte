@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import { Github } from '@lucide/svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { writable } from 'svelte/store';
 	import { setUserContext } from '$lib/context/user-context';
@@ -22,5 +23,21 @@
 		{@render children()}
 	</div>
 
-	<footer class="mt-32 h-52 rounded-t-3xl border-2 border-blue-800 bg-blue-500"></footer>
+	<footer
+		class="mt-32 flex items-center justify-between rounded-t-3xl border-2 border-blue-800 bg-blue-500 px-8 py-10"
+	>
+		<div>
+			<p class="font-medium text-white">BiteHabits © {new Date().getFullYear()}</p>
+		</div>
+
+		<div>
+			<a
+				href="https://github.com/bitehabits"
+				class="text-white transition-colors hover:text-gray-300"
+				target="_blank"
+			>
+				<Github />
+			</a>
+		</div>
+	</footer>
 </div>

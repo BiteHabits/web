@@ -108,5 +108,46 @@ export const actions: Actions = {
 			success: true,
 			message: `Fridge shared successfully with ${email}`
 		};
+	},
+	removeProduct: async ({ locals, request, params }) => {
+		const userId = locals.auth?.user.id;
+		if (!userId) {
+			return fail(401, {
+				success: false,
+				error: 'You must be logged in to remove a product'
+			});
+		}
+
+		const formData = await request.formData();
+		const productId = formData.get('product_id') as string;
+		const fridgeId = params.id;
+		if (!productId || !fridgeId) {
+			return fail(400, {
+				success: false,
+				error: 'Product ID and fridge ID are required'
+			});
+		}
+
+		const product = await db.query.products.findFirst({
+			where: (fields) => eq(fields.id, productId)
+		});
+		if (!product) {
+			return fail(404, {
+				success: false,
+				error: 'Product not found'
+			});
+		}
+		if (product.fridgeId !== fridgeId) {
+			return fail(403, {
+				success: false,
+				error: 'You do not have permission to remove this product'
+			});
+		}
+		await db.delete(products).where(eq(products.id, productId));
+
+		return {
+			success: true,
+			message: 'Product removed successfully'
+		};
 	}
 };
