@@ -7,6 +7,10 @@
 	let error = $derived(fridgeName.length < 2 ? 'Kjøleskap må være minst 2 tegn langt' : null);
 </script>
 
+<svelte:head>
+	<title>Opprett nytt kjøleskap</title>
+</svelte:head>
+
 <div class="mx-auto max-w-xl">
 	<h1 class="mb-8 text-4xl font-light">Nytt kjøleskap</h1>
 

@@ -22,6 +22,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{fridge.name} - Kjøleskap</title>
+</svelte:head>
+
 <div class="mx-auto flex max-w-2xl flex-col px-4">
 	<div class="mb-8 flex items-center justify-between">
 		<h1 class="text-4xl font-light">{fridge.name}</h1>

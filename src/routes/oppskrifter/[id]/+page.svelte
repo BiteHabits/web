@@ -15,6 +15,10 @@
 	const recipe = data.recipe;
 </script>
 
+<svelte:head>
+	<title>{recipe.name} - Oppskrift</title>
+</svelte:head>
+
 <main class="relative flex justify-center">
 	<section
 		class="absolute left-6 top-6 flex w-72 flex-col overflow-hidden rounded-xl bg-yellow-100 shadow-md"

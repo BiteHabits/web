@@ -2,6 +2,10 @@
 	import Bento from '$lib/components/Bento.svelte';
 </script>
 
+<svelte:head>
+	<title>BiteHabits</title>
+</svelte:head>
+
 <div class="relative flex flex-col pb-32 pt-14 text-center">
 	<h1 class="mb-5 text-6xl font-bold text-gray-800">BiteHabits</h1>
 	<div class="-space-y-1">

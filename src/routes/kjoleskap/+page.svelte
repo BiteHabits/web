@@ -6,6 +6,10 @@
 	let fridges = $derived(data.fridges);
 </script>
 
+<svelte:head>
+	<title>Kjøleskap</title>
+</svelte:head>
+
 <div class="mx-auto max-w-xl p-5">
 	{#if fridges.length === 0}
 		<p class="mb-8 text-center text-xl font-medium">

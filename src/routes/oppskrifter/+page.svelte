@@ -23,6 +23,10 @@
 	];
 </script>
 
+<svelte:head>
+	<title>Oppskrifter</title>
+</svelte:head>
+
 {#if recipes}
 	<main class="flex flex-col items-center gap-4">
 		<ul class="flex flex-col items-center gap-2">

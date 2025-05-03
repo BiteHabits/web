@@ -4,6 +4,10 @@
 	import Input from '$lib/components/ui/Input.svelte';
 </script>
 
+<svelte:head>
+	<title>Logg inn</title>
+</svelte:head>
+
 <div class="mx-auto max-w-md">
 	<h1 class="mb-8 text-4xl font-light">Logg inn</h1>
 
