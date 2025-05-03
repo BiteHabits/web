@@ -10,11 +10,11 @@
 	const middleRoutes = [
 		{
 			label: 'Oppskrifter',
-			href: '/recipes'
+			href: '/oppskrifter'
 		},
 		{
 			label: 'Kjøleskap',
-			href: '/fridges'
+			href: '/kjoleskap'
 		}
 	];
 
@@ -74,17 +74,17 @@
 				<img src={UserIcon} alt="user icon" />
 			</li>
 			<li>
-				<form action="/log-out" method="post" use:enhance>
+				<form action="/logg-ut" method="post" use:enhance>
 					<button class="text-gray-600 transition-colors hover:text-gray-900">Logg ut</button>
 				</form>
 			</li>
 		{/if}
 		{#if !$user}
 			<li>
-				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/log-in">Logg inn</a>
+				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/logg-inn">Logg inn</a>
 			</li>
 			<li>
-				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/registrer"
+				<a class="text-gray-600 transition-colors hover:text-gray-900" href="/registrer-deg"
 					>Registrer</a
 				>
 			</li>

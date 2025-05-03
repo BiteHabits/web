@@ -41,6 +41,6 @@ export const actions: Actions = {
 			});
 		}
 
-		throw redirect(303, '/fridges');
+		throw redirect(303, '/kjoleskap');
 	}
 };

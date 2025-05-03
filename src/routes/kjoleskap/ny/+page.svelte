@@ -27,7 +27,7 @@
 		{/if}
 
 		<div class="button-group">
-			<a href="/fridges" class="cancel-button">Avbryt</a>
+			<a href="/kjoleskap" class="cancel-button">Avbryt</a>
 			<button type="submit" class="submit-button">Opprett kjøleskap</button>
 		</div>
 	</form>

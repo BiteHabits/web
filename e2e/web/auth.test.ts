@@ -5,7 +5,7 @@ import { givenSession } from '../fixtures/sessions';
 import { setSessionCookie } from '../utils/set-session';
 
 test('user can register an account', async ({ page }) => {
-	await page.goto('/registrer');
+	await page.goto('/registrer-deg');
 
 	await page.fill('input[name="email"]', 'hello@world.com');
 	await page.fill('input[name="name"]', 'Hello World');

@@ -1,7 +1,9 @@
-import { verify } from '$lib/auth/hash.js';
+import { hash } from '$lib/auth/hash';
 import { AUTH_COOKIE_NAME } from '$lib/constants.js';
 import { db } from '$lib/db/drizzle.js';
-import { sessions } from '$lib/db/schemas/sessions.js';
+import { sessions } from '$lib/db/schemas';
+import { passwords } from '$lib/db/schemas/passwords.js';
+import { users } from '$lib/db/schemas/users.js';
 import { nanoid } from 'nanoid';
 import { addDays } from 'date-fns';
 import { fail, redirect } from '@sveltejs/kit';
@@ -10,29 +12,38 @@ export const actions = {
 	default: async ({ request, cookies }) => {
 		const formData = await request.formData();
 
+		const name = formData.get('name') as string;
 		const email = formData.get('email') as string;
 		const password = formData.get('password') as string;
 
-		const user = await db.query.users.findFirst({
-			where: (row, { eq }) => eq(row.email, email),
-			with: {
-				password: true
-			}
-		});
+		const userId = nanoid();
 
-		if (!user || !user.password || !verify(password, user.password.hash)) {
+		try {
+			await db.insert(users).values({
+				id: userId,
+				email: email,
+				name: name
+			});
+		} catch {
 			return fail(400, {
 				success: false,
-				message: 'E-post eller passord er feil'
+				message: 'E-post er allerede registrert'
 			});
 		}
 
+		const hashedPassword = hash(password);
+
+		await db.insert(passwords).values({
+			userId: userId,
+			hash: hashedPassword
+		});
+
 		const sessionId = nanoid();
-		const expiresAt = addDays(new Date(), 14);
+		const expiresAt = addDays(new Date(), 7);
 
 		await db.insert(sessions).values({
 			id: sessionId,
-			userId: user.id,
+			userId: userId,
 			expiresAt
 		});
 
@@ -41,6 +52,6 @@ export const actions = {
 			expires: expiresAt
 		});
 
-		redirect(302, "/fridges")
+		redirect(302, '/kjoleskap');
 	}
 };
