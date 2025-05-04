@@ -35,10 +35,10 @@ export const getValidSessionAndUser = async (sessionId: string) => {
 
 export const deleteSession = async (sessionId: string) => {
 	await db.delete(sessions).where(eq(sessions.id, sessionId));
-}
+};
 
 export const clearSessionCookie = (cookies: Cookies) => {
 	cookies.delete(AUTH_COOKIE_NAME, {
-		path: "/"
-	})
-}
+		path: '/'
+	});
+};
