@@ -18,7 +18,7 @@ test('user can create fridge', async ({ page }) => {
 
 	await page.waitForURL('/kjoleskap');
 
-	await expect(page.locator('p')).toContainText('Du har ingen kjøleskap ennå.');
+	await expect(page.locator('p').first()).toContainText('Du har ingen kjøleskap ennå.');
 
 	await page.locator('a', { hasText: 'Opprett nytt kjøleskap' }).click();
 

@@ -48,8 +48,6 @@
 </script>
 
 <div class="scanner">
-	<!-- add muted, autoplay, playsinline so the feed shows up automatically -->
-	<!-- svelte-ignore a11y_media_has_caption -->
 	<video bind:this={previewRef} autoplay muted playsinline class="scanner__video"></video>
 </div>
 
