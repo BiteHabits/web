@@ -12,6 +12,7 @@ permissions:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+  KASSALAPP_API_KEY: ${{ secrets.KASSALAPP_API_KEY }}
   IMAGE_NAME: ghcr.io/bitehabits/web
   IMAGE_TAG: latest
 
@@ -59,6 +60,7 @@ jobs:
           docker build \
             --secret id=database_url,env=DATABASE_URL \
             --secret id=database_auth_token,env=DATABASE_AUTH_TOKEN \
+            --secret id=kassalapp_api_key,env=KASSALAPP_API_KEY \
             -t $IMAGE_NAME:$IMAGE_TAG .
 
       - name: 🔐 Authenticate Docker

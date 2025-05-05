@@ -10,8 +10,10 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN --mount=type=secret,id=database_url \
     --mount=type=secret,id=database_auth_token \
+    --mount=type=secret,id=kassalapp_api_key \
     export DATABASE_URL="$(cat /run/secrets/database_url)" && \
     export DATABASE_AUTH_TOKEN="$(cat /run/secrets/database_auth_token)" && \
+    export KASSALAPP_API_KEY="$(cat /run/secrets/kassalapp_api_key)" && \
     pnpm run build
 
 FROM node:22-alpine

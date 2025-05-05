@@ -12,7 +12,7 @@
 	};
 
 	let { data }: Props = $props();
-	const recipe = data.recipe;
+	const recipe = $derived(data.recipe);
 </script>
 
 <svelte:head>

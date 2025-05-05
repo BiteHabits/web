@@ -14,6 +14,12 @@ variable "database_auth_token" {
   sensitive   = true
 }
 
+variable "kassalapp_api_key" {
+  description = "The API key for Kassalapp"
+  type        = string
+  sensitive   = true
+}
+
 variable "location" {
   default = "West Europe"
 }
