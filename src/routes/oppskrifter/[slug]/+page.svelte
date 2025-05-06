@@ -1,17 +1,5 @@
 <script lang="ts">
-	type Props = {
-		data: {
-			recipe: {
-				id: number;
-				name: string;
-				image: string;
-				ingredients: { name: string }[];
-				steps: string[];
-			};
-		};
-	};
-
-	let { data }: Props = $props();
+	let { data } = $props();
 	const recipe = $derived(data.recipe);
 </script>
 

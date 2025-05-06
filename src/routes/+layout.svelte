@@ -19,7 +19,7 @@
 <div class="flex min-h-screen w-full flex-col">
 	<Header />
 
-	<div class="w-full flex-1">
+	<div class="w-full flex-1 px-4">
 		{@render children()}
 	</div>
 

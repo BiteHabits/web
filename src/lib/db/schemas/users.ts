@@ -9,7 +9,8 @@ export const users = sqliteTable(
 	{
 		id: text().primaryKey().$defaultFn(nanoid),
 		name: text().notNull(),
-		email: text().notNull().unique()
+		email: text().notNull().unique(),
+		allergies: text({ mode: 'json' }).$type<Array<string>>()
 	},
 	(t) => [index('email_idx').on(t.email)]
 );
