@@ -37,7 +37,7 @@
 		<div>
 			<h2 class="mb-4 mt-8 text-2xl font-light">Allergier</h2>
 			<ul class="flex flex-wrap gap-x-6 gap-y-2">
-				{#each allergies as allergy}
+				{#each allergies as allergy (allergy.id)}
 					<li class="flex items-center gap-2">
 						<label>
 							<input
